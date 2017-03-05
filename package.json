@@ -2,11 +2,11 @@
   "name": "quoro",
   "version": "0.1.0",
   "description": "Quoro is a website like Quora. Both frontend and backend are written in JavaScript.",
-  "main": "webpack.config.js",
+  "main": "src/index.js",
   "scripts": {
     "build": "webpack",
     "build:watch": "webpack --w",
-    "server": "nodemon --exec babel-node --presets es2015,react src/server.js",
+    "server": "nodemon --exec babel-node --presets es2015,react src/index.js",
     "test": "jest --coverage",
     "test:watch": "jest --watch"
   },
