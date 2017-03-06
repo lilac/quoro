@@ -13030,10 +13030,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.app = undefined;
 
 var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(126);
+
+var _navbar = __webpack_require__(280);
+
+var _navbar2 = _interopRequireDefault(_navbar);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -13041,24 +13048,38 @@ if (true) {
   __webpack_require__(274);
 }
 
-var app = function app(props) {
+var app = exports.app = function app(props) {
+  if (!props.user) {
+    return _react2.default.createElement(
+      'h2',
+      { className: 'hehe' },
+      'Please log in'
+    );
+  }
+
   return _react2.default.createElement(
     'div',
     { className: 'App' },
-    _react2.default.createElement(
-      'h1',
-      null,
-      'SSR!'
-    ),
+    _react2.default.createElement(_navbar2.default, null),
     props.children
   );
 };
 
 app.propTypes = {
-  children: _react.PropTypes.object
+  children: _react.PropTypes.object,
+  user: _react.PropTypes.object
 };
 
-exports.default = app;
+app.defaultProps = {
+  children: null,
+  user: null
+};
+
+var mapStateToProps = function mapStateToProps(state) {
+  return { user: state.users.user };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(app);
 
 /***/ }),
 /* 128 */
@@ -29036,6 +29057,199 @@ window.onload = function () {
     _react2.default.createElement(_appRoutes2.default, null)
   ), document.getElementById('root'));
 };
+
+/***/ }),
+/* 280 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _searchBox = __webpack_require__(283);
+
+var _searchBox2 = _interopRequireDefault(_searchBox);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+if (true) {
+  __webpack_require__(282);
+}
+
+var navbar = function navbar(props) {
+  return _react2.default.createElement(
+    'div',
+    { className: 'Navbar navbar' },
+    _react2.default.createElement(
+      'div',
+      { className: 'Navbar-title navbar-brand' },
+      props.title
+    ),
+    _react2.default.createElement(_searchBox2.default, { submit: function submit(query) {
+        return props.searchQuestions(query);
+      } }),
+    _react2.default.createElement(
+      'div',
+      { className: 'Navbar-username navbar-text' },
+      props.username
+    )
+  );
+};
+
+navbar.propTypes = {
+  title: _react.PropTypes.string,
+  username: _react.PropTypes.string,
+  searchQuestions: _react.PropTypes.func
+};
+
+navbar.defaultProps = {
+  title: 'Quoro',
+  username: 'Unknown'
+};
+
+exports.default = navbar;
+
+/***/ }),
+/* 281 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(132)();
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/***/ }),
+/* 282 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(281);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// add the styles to the DOM
+var update = __webpack_require__(273)(content, {});
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!./navbar.css", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!./navbar.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 283 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.SearchBox = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SearchBox = exports.SearchBox = function (_Component) {
+  _inherits(SearchBox, _Component);
+
+  function SearchBox(props) {
+    _classCallCheck(this, SearchBox);
+
+    var _this = _possibleConstructorReturn(this, (SearchBox.__proto__ || Object.getPrototypeOf(SearchBox)).call(this, props));
+
+    _this.state = {
+      query: ''
+    };
+    return _this;
+  }
+
+  _createClass(SearchBox, [{
+    key: 'onChange',
+    value: function onChange(e) {
+      this.setState({ query: e.target.value });
+    }
+  }, {
+    key: 'onSubmit',
+    value: function onSubmit(e) {
+      e.preventDefault();
+      this.props.submit(this.state.query);
+      this.setState({ query: '' });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      return _react2.default.createElement(
+        'form',
+        { className: 'SearchBox form-inline my-2 my-lg-0', onSubmit: function onSubmit(e) {
+            return _this2.onSubmit(e);
+          } },
+        _react2.default.createElement('input', {
+          className: 'SearchBox-input form-control mr-sm-2',
+          value: this.state.query,
+          type: 'text',
+          placeholder: 'Search',
+          onChange: function onChange(e) {
+            return _this2.onChange(e);
+          }
+        }),
+        _react2.default.createElement(
+          'button',
+          {
+            className: 'SearchBox-btn btn btn-outline-success my-2 my-sm-0',
+            type: 'submit',
+            onClick: function onClick(e) {
+              return _this2.onSubmit(e);
+            }
+          },
+          'Search'
+        )
+      );
+    }
+  }]);
+
+  return SearchBox;
+}(_react.Component);
+
+SearchBox.propTypes = {
+  submit: _react.PropTypes.func.isRequired
+};
+
+exports.default = SearchBox;
 
 /***/ })
 /******/ ]);
