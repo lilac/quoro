@@ -2,7 +2,10 @@ import { create } from './repository';
 import resSender from '../common/res-sender';
 
 export default (req, res) => {
-  const { login, password, username, email } = req.body;
-  return create(username, login, password, email)
+  const { user, body } = req;
+  const { content } = body;
+  const { id } = user;
+
+  return create(content, id)
     .then(result => resSender(res, result));
 };

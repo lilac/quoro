@@ -16,7 +16,6 @@ export class SearchBox extends Component {
   onSubmit(e) {
     e.preventDefault();
     this.props.submit(this.state.query);
-    this.setState({ query: '' });
   }
 
   render() {

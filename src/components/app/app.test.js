@@ -1,22 +1,15 @@
-import { shallow } from 'enzyme';
 import React from 'react';
+import { shallow } from 'enzyme';
 import { app as App } from './app';
 
-const user = { username: 'primosdace' };
 
-test('Renders App', () => {
-  const wrapper = shallow(<App user={user} />);
-  expect(wrapper.find('.App').length).toBe(1);
+it('renders with provided children', () => {
+  const wrapper = shallow(<App user={{ username: 'username' }} > <div className="test" /> </App>);
+  expect(wrapper.find('.App').exists()).toBe(true);
+  expect(wrapper.find('.test').exists()).toBe(true);
 });
 
-test('While no user in props, renders loginBox component', () => {
+it('renders loginBox while no user provided', () => {
   const wrapper = shallow(<App />);
-
-  expect(wrapper.prop('user')).toBe(undefined);
-  expect(wrapper.find('.App').length).toBe(0);
-});
-
-test('Renders passed components', () => {
-  const wrapper = shallow(<App user={user}><div className="passed" /></App>);
-  expect(wrapper.find('.passed').length).toBe(1);
+  expect(wrapper.find('.App-login').exists()).toBe(true);
 });

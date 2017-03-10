@@ -8,7 +8,7 @@ if (process.env.BROWSER) {
 
 export const app = (props) => {
   if (!props.user) {
-    return (<h2 className="hehe">Please log in</h2>);
+    return (<div className="App-login">Please log in</div>);
   }
 
   return (
@@ -20,7 +20,6 @@ export const app = (props) => {
 };
 
 app.propTypes = {
-  children: PropTypes.object,
   user: PropTypes.object,
 };
 
@@ -29,6 +28,8 @@ app.defaultProps = {
   user: null,
 };
 
-const mapStateToProps = state => ({ user: state.users.user });
+// user.activeUser
+
+const mapStateToProps = state => ({ user: state.user });
 
 export default connect(mapStateToProps, null)(app);

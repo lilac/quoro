@@ -1,14 +1,15 @@
 import React from 'react';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { renderToString } from 'react-dom/server';
 import { RouterContext, match } from 'react-router';
+import thunk from 'redux-thunk';
 
 import reducers from './reducers/index';
 import template from './template';
 import routes from './routes';
 
-const store = createStore(reducers);
+const store = createStore(reducers, undefined, applyMiddleware(thunk));
 
 export default (req, res) => {
   match(

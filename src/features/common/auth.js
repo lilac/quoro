@@ -1,9 +1,7 @@
 import { verify } from './promise-jwt';
 import db from '../../db';
-import resSender from './resSender';
-
-const invalidTokenResponse = { status: 403, message: 'Provided token is incorrect.' };
-const serverErrorResponse = { status: 500, message: 'Error. Please try again later.' };
+import resSender from './res-sender';
+import { serverError, authFailure } from './responses-with-status';
 
 export default (req, res, next) => {
   const token = req.body.token || req.query.token;
@@ -13,15 +11,15 @@ export default (req, res, next) => {
       .then(({ login }) => db.findUser(login))
       .then((user) => {
         if (!user) {
-          return resSender(res, serverErrorResponse);
+          return resSender(res, serverError);
         }
         Object.assign(req, {
           user,
         });
         return next();
       })
-      .catch(() => resSender(res, serverErrorResponse));
+      .catch(() => resSender(res, serverError));
   }
 
-  return resSender(res, invalidTokenResponse);
+  return resSender(res, authFailure);
 };

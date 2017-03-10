@@ -1,5 +1,7 @@
-import * as users from './users';
+import * as user from './user';
+import * as questions from './questions';
 
 export default Object.assign({}, {
-  users,
+  user,
+  questions,
 });

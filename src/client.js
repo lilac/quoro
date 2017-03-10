@@ -1,21 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 import AppRoutes from './components/app-routes/app-routes';
-import reducers from './reducers/index';
+import reducer from './reducers/index';
 
 let preloadedState;
 
 try {
-  preloadedState = JSON.parse(window.PRELOADED_STATE);
+  preloadedState = JSON.parse(window.PRELOADED_STATE) || undefined;
 } catch (e) {
-  preloadedState = null;
+  preloadedState = undefined;
 }
 
 console.log('preloaded state', preloadedState);
 
-const store = createStore(reducers, preloadedState);
+const store = createStore(reducer, preloadedState, applyMiddleware(thunk));
 
 window.onload = () => {
   ReactDOM.render(
@@ -23,3 +24,5 @@ window.onload = () => {
       <AppRoutes />
     </Provider>, document.getElementById('root'));
 };
+
+export default store;
