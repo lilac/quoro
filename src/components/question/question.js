@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import Spinner from '../spinner/spinner';
 import { fetchQuestion, clearQuestion } from '../../actions/active-question';
@@ -18,8 +19,11 @@ class Question extends Component {
   }
 
   componentWillMount() {
-    const id = this.props.params.id;
-    this.props.fetchQuestion(id, this.props.token);
+    if (!this.props.user) {
+      return null;
+    }
+    const id = this.props.match.id;
+    this.props.fetchQuestion(id, this.props.user.token);
   }
 
   componentWillUnmount() {
@@ -27,6 +31,10 @@ class Question extends Component {
   }
 
   render() {
+    if (!this.props.user) {
+      return (<Redirect to="/login" />);
+    }
+
     if (this.state.error) {
       return (<p>{this.state.error}</p>);
     }
@@ -45,6 +53,6 @@ class Question extends Component {
 
 Question.propTypes = {};
 
-const mapStateToProps = state => ({ token: state.user.activeUser.token });
+const mapStateToProps = state => ({ user: state.user.activeUser });
 
 export default connect(mapStateToProps, { fetchQuestion, clearQuestion })(Question);

@@ -1,3 +1,5 @@
+import isObject from './is-object';
+
 const statuses = {
   500: 'Error. Please try again later.',
   404: 'Resource not found.',
@@ -7,9 +9,11 @@ const statuses = {
   200: 'Request fulfilled successfully.',
 };
 
-const statusMaker = (status, result = {}) => {
-  const message = (result.message || statuses[status] || '');
+const statusMaker = (status, result = null) => {
+  const msg = isObject(result) ? result.message : undefined;
+  const message = (msg || statuses[status] || '');
   const response = Object.assign({}, {
+    status,
     message,
     result,
   });

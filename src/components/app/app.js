@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
 import Navbar from '../navbar/navbar';
 
 if (process.env.BROWSER) {
@@ -8,12 +9,12 @@ if (process.env.BROWSER) {
 
 export const app = (props) => {
   if (!props.user) {
-    return (<div className="App-login">Please log in</div>);
+    return (<Redirect from="/" to="/login" />);
   }
 
   return (
     <div className="App">
-      <Navbar />
+      <Navbar username={props.user.username} title="Quoro" />
       {props.children}
     </div>
   );
@@ -28,8 +29,6 @@ app.defaultProps = {
   user: null,
 };
 
-// user.activeUser
-
-const mapStateToProps = state => ({ user: state.user });
+const mapStateToProps = state => ({ user: state.user.activeUser });
 
 export default connect(mapStateToProps, null)(app);

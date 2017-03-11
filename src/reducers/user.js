@@ -1,23 +1,29 @@
-export const SET_ACTIVE_USER = Symbol('SET_USER');
-export const SET_USER_ERROR = Symbol('SET_USER_ERROR');
+export const LOG_IN_SUCCESS = Symbol('LOG_IN_SUCCESS');
+export const LOG_IN_ERROR = Symbol('LOG_IN_ERROR');
+export const REGISTER_STATUS = Symbol('REGISTER_STATUS');
 
 const initialState = {
-  activeUser: {
-    token: '',
-  },
-  error: '',
+  activeUser: null,
+  message: '',
 };
 
 export default (state = initialState, action) => {
+  console.log(action.payload);
+  console.log(action.type);
   switch (action.type) {
-    case SET_ACTIVE_USER: {
+    case LOG_IN_SUCCESS: {
       return Object.assign({}, state, {
         activeUser: action.payload,
       });
     }
-    case SET_USER_ERROR: {
+    case LOG_IN_ERROR: {
       return Object.assign({}, state, {
-        
+        error: action.payload,
+      });
+    }
+    case REGISTER_STATUS: {
+      return Object.assign({}, state, {
+        message: action.payload,
       });
     }
     default: return state;

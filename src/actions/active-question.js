@@ -1,7 +1,13 @@
 import * as types from '../reducers/active-question';
 
 export const fetchQuestionError = msg => ({ type: types.FETCH_QUESTION_ERROR, payload: msg });
-export const fetchQuestionSuccess = result => ({ type: types.FETCH_QUESTION_SUCCESS, payload: result });
+export const fetchQuestionSuccess = (results) => {
+  const result = results.map(response => response.result);
+  return {
+    type: types.FETCH_QUESTION_SUCCESS,
+    payload: result,
+  };
+};
 
 export const fetchQuestion = (id, token) => {
   const apiQuestions = [
@@ -19,13 +25,8 @@ export const fetchQuestion = (id, token) => {
 
       return result.json();
     }))
-    .then((...results) => {
-      dispatch(fetchQuestionSuccess(results));
-    })
-    .catch(() => {
-      console.log('err!');
-      dispatch(fetchQuestionError('Something went wrong!'));
-    });
+    .then((...results) => dispatch(fetchQuestionSuccess(results)))
+    .catch(() => dispatch(fetchQuestionError('Something went wrong!')));
 };
 
 export const clearQuestion = () => ({ type: types.CLEAR_QUESTION });

@@ -1,5 +1,6 @@
 import db from '../../db';
 import statusMaker, { serverError, missingParams, successfulAction, resourceNotFound } from '../common/responses-with-status';
+import parseQuestion from '../common/parse-question';
 
 export const find = (id) => {
   if (!id) {
@@ -11,9 +12,8 @@ export const find = (id) => {
       if (!result) {
         return resourceNotFound;
       }
-      console.log(result);
-      const { content, user_id: userId } = result;
-      const question = { content, userId };
+
+      const question = parseQuestion(result);
       return statusMaker(200, { question });
     })
     .catch(() => serverError);
@@ -26,5 +26,20 @@ export const create = (content, userId) => {
 
   return db.createQuestion(content, userId)
     .then(() => successfulAction)
+    .catch(() => serverError);
+};
+
+export const findLast = (amount) => {
+  if (!amount) {
+    return Promise.resolve(missingParams);
+  }
+  return db.findLastQuestions(amount)
+    .then((results) => {
+      if (!results) {
+        throw new Error();
+      }
+      return results.map(question => parseQuestion(question));
+    })
+    .then(questions => statusMaker(200, { questions }))
     .catch(() => serverError);
 };

@@ -32,7 +32,7 @@ export const authenticate = (reqLogin, reqPassword) => {
         const token = jwt.sign({ id, login }, process.env.SECRET, {
           expiresIn: '2h',
         });
-        return statusMaker(201, { login, token, username });
+        return statusMaker(200, { login, token, username });
       }
       return statusMaker(400, { message: 'Password is incorrect.' });
     })

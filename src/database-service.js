@@ -117,9 +117,11 @@ class DatabaseService {
   }
 
   findLastQuestions(amount) {
-    const query = 'SELECT id, content, added_at FROM Questions ORDER BY added_at DESC LIMIT $1;';
+    const query = 'SELECT * FROM questions ORDER BY added_at DESC LIMIT $1;';
     const data = [amount];
-    return this.query(query, data);
+    return this.query(query, data)
+      .then(result => result.rows)
+      .catch(() => null);
   }
 
 }

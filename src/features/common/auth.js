@@ -1,7 +1,7 @@
 import { verify } from './promise-jwt';
 import db from '../../db';
 import resSender from './res-sender';
-import { serverError, authFailure } from './responses-with-status';
+import { authFailure } from './responses-with-status';
 
 export default (req, res, next) => {
   const token = req.body.token || req.query.token;
@@ -11,14 +11,14 @@ export default (req, res, next) => {
       .then(({ login }) => db.findUser(login))
       .then((user) => {
         if (!user) {
-          return resSender(res, serverError);
+          return resSender(res, authFailure);
         }
         Object.assign(req, {
           user,
         });
         return next();
       })
-      .catch(() => resSender(res, serverError));
+      .catch(() => resSender(res, authFailure));
   }
 
   return resSender(res, authFailure);

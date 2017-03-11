@@ -1,28 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import AppRoutes from './components/app-routes/app-routes';
 import reducer from './reducers/index';
+import Routes from './routes';
 
-let preloadedState;
+const store = createStore(reducer, window.PRELOADED_STATE, applyMiddleware(thunk));
 
-try {
-  preloadedState = JSON.parse(window.PRELOADED_STATE) || undefined;
-} catch (e) {
-  preloadedState = undefined;
-}
-
-console.log('preloaded state', preloadedState);
-
-const store = createStore(reducer, preloadedState, applyMiddleware(thunk));
+console.log(window.PRELOADED_STATE);
 
 window.onload = () => {
   ReactDOM.render(
-    <Provider store={store}>
-      <AppRoutes />
-    </Provider>, document.getElementById('root'));
+    <BrowserRouter>
+      <Provider store={store}>
+        <Routes />
+      </Provider>
+    </BrowserRouter>, document.getElementById('root'));
 };
 
 export default store;
