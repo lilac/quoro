@@ -9,22 +9,22 @@ const statuses = {
   200: 'Request fulfilled successfully.',
 };
 
-const statusMaker = (status, result = null) => {
+const statusCreator = status => (result = null) => {
   const msg = isObject(result) ? result.message : undefined;
   const message = (msg || statuses[status] || '');
   const response = Object.assign({}, {
     status,
-    message,
     result,
+    message,
   });
   return response;
 };
 
-export const serverError = statusMaker(500);
-export const resourceNotFound = statusMaker(404);
-export const authFailure = statusMaker(403);
-export const missingParams = statusMaker(400);
-export const resourceCreated = statusMaker(201);
-export const successfulAction = statusMaker(200);
+export const serverError = statusCreator(500);
+export const resourceNotFound = statusCreator(404);
+export const authFailure = statusCreator(403);
+export const missingParams = statusCreator(400);
+export const resourceCreated = statusCreator(201);
+export const successfulAction = statusCreator(200);
 
-export default statusMaker;
+export default statusCreator;

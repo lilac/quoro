@@ -1,8 +1,8 @@
-import { authenticate } from './repository';
+import { update } from './repository';
 import resSender from '../common/res-sender';
 
 export default (req, res) => {
-  const { login, password } = req.body;
-  return authenticate(login, password)
+  const { id, content } = req.body;
+  return update(id, content)
     .then(result => resSender(res, result));
 };

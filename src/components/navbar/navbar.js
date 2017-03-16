@@ -28,9 +28,6 @@ const navbar = props => (
         </li>
       </ul>
       <SearchBox submit={query => console.log(query)} />
-      <div className="Navbar-username navbar-text">
-        <span>{props.username}</span>
-      </div>
     </div>
   </nav>
 );

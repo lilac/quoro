@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt-nodejs';
 import db from '../../db';
-import statusMaker, { serverError, missingParams, resourceCreated, successfulAction } from '../common/responses-with-status';
+import statusCreator, { serverError, missingParams, resourceCreated, successfulAction } from '../common/responses-with-status';
 
 export const create = (username, login, password, email) => {
   if (!username || !login || !password || !email) {
@@ -10,21 +10,19 @@ export const create = (username, login, password, email) => {
 
   const hash = bcrypt.hashSync(password);
 
-  return db.findUser(login).then(
-    (user) => {
-      if (user) {
-        return statusMaker(400, { message: 'User with provided login already exists.' });
-      }
-      return db.createUser(username, login, hash, email)
-        .then(() => resourceCreated);
+  return db.findUser(login).then((user) => {
+    if (user) {
+      return statusCreator(400)({ message: 'User with provided login already exists.' });
     }
-  )
-  .catch(() => serverError);
+    return db.createUser(username, login, hash, email)
+      .then(() => resourceCreated());
+  })
+  .catch(() => serverError());
 };
 
 export const authenticate = (reqLogin, reqPassword) => {
   if (!reqLogin || !reqPassword) {
-    return Promise.resolve(missingParams);
+    return Promise.resolve(missingParams());
   }
   return db.findUser(reqLogin)
     .then(({ login, id, password, username }) => {
@@ -32,29 +30,39 @@ export const authenticate = (reqLogin, reqPassword) => {
         const token = jwt.sign({ id, login }, process.env.SECRET, {
           expiresIn: '2h',
         });
-        return statusMaker(200, { login, token, username });
+        return successfulAction({ login, token, username });
       }
-      return statusMaker(400, { message: 'Password is incorrect.' });
+      return statusCreator(400)({ message: 'Password is incorrect.' });
     })
-    .catch(() => serverError);
+    .catch(() => serverError());
 };
 
 export const update = (id) => {
   if (!id) {
-    return Promise.resolve(missingParams);
+    return Promise.resolve(missingParams());
   }
   return db.updateUser(id)
-    .then(() => successfulAction)
-    .catch(() => serverError);
+    .then(() => successfulAction())
+    .catch(() => serverError());
 };
 
 export const remove = (id) => {
   if (!id) {
-    return Promise.resolve(missingParams);
+    return Promise.resolve(missingParams());
   }
 
   return db.deleteUser(id)
-    .then(() => successfulAction)
-    .catch(() => serverError);
+    .then(() => successfulAction())
+    .catch(() => serverError());
+};
+
+export const find = (id) => {
+  if (!id) {
+    return Promise.resolve(missingParams());
+  }
+
+  return db.findUserById(id)
+    .then(user => successfulAction(user))
+    .catch(() => serverError());
 };
 

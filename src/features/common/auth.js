@@ -11,15 +11,15 @@ export default (req, res, next) => {
       .then(({ login }) => db.findUser(login))
       .then((user) => {
         if (!user) {
-          return resSender(res, authFailure);
+          return resSender(res, authFailure());
         }
         Object.assign(req, {
           user,
         });
         return next();
       })
-      .catch(() => resSender(res, authFailure));
+      .catch(() => resSender(res, authFailure()));
   }
 
-  return resSender(res, authFailure);
+  return resSender(res, authFailure());
 };

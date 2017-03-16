@@ -6,7 +6,7 @@ export const logInSuccess = user => ({ type: types.LOG_IN_SUCCESS, payload: user
 export const logInError = message => ({ type: types.LOG_IN_ERROR, payload: message });
 
 export const logIn = (login, password) => dispatch =>
-  request('http://localhost:8000/api/users', 'GET', { login, password })
+  requestWithBody('http://localhost:8000/api/authorize', 'POST', { login, password })
     .then((response) => {
       if (response.ok) {
         return response.json();

@@ -66,10 +66,18 @@ class DatabaseService {
       .then(result => result.rows[0]);
   }
 
-  findAnswers(id) {
-    const query = 'SELECT content, answ_id, user_id FROM answers WHERE id_q = $1;';
+  findUserById(id) {
+    const query = 'SELECT id, username FROM users WHERE id = $1';
     const data = [id];
-    return this.query(query, data);
+    return this.query(query, data)
+      .then(result => result.rows[0]);
+  }
+
+  findAnswers(id) {
+    const query = 'SELECT * FROM answers WHERE id_q = $1;';
+    const data = [id];
+    return this.query(query, data)
+      .then(result => result.rows);
   }
 
   updateAnswer(id, content) {
@@ -86,12 +94,12 @@ class DatabaseService {
 
   createAnswer(questionId, userId, content) {
     const query = 'INSERT INTO answers(id_q, content, user_id) VALUES ($1, $2, $3);';
-    const data = [questionId, userId, content];
+    const data = [questionId, content, userId];
     return this.query(query, data);
   }
 
   findQuestionWithContent(content) {
-    const query = `SELECT id, content, user_id, added_at, username FROM questions, users WHERE questions.user_id = users.id AND content LIKE '%$1%';`;
+    const query = `SELECT id, content, title, user_id, added_at, username FROM questions, users WHERE questions.user_id = users.id AND content LIKE '%$1%';`;
     const data = [content];
     return this.query(query, data);
   }
@@ -104,9 +112,9 @@ class DatabaseService {
       .catch(() => null);
   }
 
-  createQuestion(content, userId) {
-    const query = 'INSERT INTO questions(content, user_id) VALUES ($1, $2);';
-    const data = [content, userId];
+  createQuestion(title, content, userId) {
+    const query = 'INSERT INTO questions(title, content, user_id) VALUES ($1, $2, $3);';
+    const data = [title, content, userId];
     return this.query(query, data);
   }
 

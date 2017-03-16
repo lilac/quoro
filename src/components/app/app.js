@@ -1,34 +1,44 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
+import { Route } from 'react-router-dom';
+import { fetchQuestions } from '../../actions/questions';
 import Navbar from '../navbar/navbar';
+import QuestionsList from '../questions-list/questions-list';
 
 if (process.env.BROWSER) {
   require('./app.css');
 }
 
-export const app = (props) => {
-  if (!props.user) {
-    return (<Redirect from="/" to="/login" />);
+class App extends Component {
+
+  componentDidMount() {
+    this.props.fetchQuestions(10);
   }
 
-  return (
-    <div className="App">
-      <Navbar username={props.user.username} title="Quoro" />
-      {props.children}
-    </div>
-  );
-};
+  render() {
+    if (!this.props.user) {
+      return (<Redirect from="/" to="/login" />);
+    }
 
-app.propTypes = {
+    return (
+      <div className="App">
+        <Route path="/" render={() => (<Navbar title="Quoro" />)} />
+        <QuestionsList questions={this.props.questions} />
+      </div>
+    );
+  }
+}
+
+App.propTypes = {
   user: PropTypes.object,
 };
 
-app.defaultProps = {
-  children: null,
+App.defaultProps = {
   user: null,
 };
 
-const mapStateToProps = state => ({ user: state.user.activeUser });
+const mapStateToProps = state =>
+  ({ questions: state.questions.questions, user: state.user.activeUser });
 
-export default connect(mapStateToProps, null)(app);
+export default connect(mapStateToProps, { fetchQuestions })(App);

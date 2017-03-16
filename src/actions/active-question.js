@@ -1,32 +1,39 @@
 import * as types from '../reducers/active-question';
+import { request } from '../helpers/fetch-helper';
 
 export const fetchQuestionError = msg => ({ type: types.FETCH_QUESTION_ERROR, payload: msg });
-export const fetchQuestionSuccess = (results) => {
-  const result = results.map(response => response.result);
-  return {
-    type: types.FETCH_QUESTION_SUCCESS,
-    payload: result,
-  };
-};
 
-export const fetchQuestion = (id, token) => {
-  const apiQuestions = [
-    `http://localhost:8000/api/questions/${id}?`,
-    `http://localhost:8000/api/answers/${id}?`,
-    `http://localhost:8000/api/questions/${id}?`,
-  ].map(value => fetch(`${value}token=${token}`));
+export const fetchQuestionSuccess = results =>
+  ({ type: types.FETCH_QUESTION_SUCCESS, payload: results });
 
-  return dispatch =>
-    Promise.all(apiQuestions)
-    .then(...results => results.map((result) => {
-      if (!result.ok) {
-        throw new Error();
+export const fetchQuestion = (id, token) => dispatch =>
+    request(`http://localhost:8000/api/questions/${id}`, 'GET', { token })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
       }
-
-      return result.json();
-    }))
-    .then((...results) => dispatch(fetchQuestionSuccess(results)))
+      throw new Error();
+    })
+    .then(({ result: question }) => {
+      const { userId } = question;
+      const apiQuestions = [
+        `http://localhost:8000/api/answers/${id}`,
+        `http://localhost:8000/api/users/${userId}`,
+      ].map(url => request(url, 'GET', { token }));
+      return Promise.all(apiQuestions)
+        .then((responses) => {
+          const results = responses.map((result) => {
+            if (!result.ok) {
+              throw new Error();
+            }
+            return result.json();
+          });
+          return Promise.all(results);
+        })
+        .then(results => results.map(res => res.result))
+        .then(results => [question, ...results]);
+    })
+    .then(results => dispatch(fetchQuestionSuccess(results)))
     .catch(() => dispatch(fetchQuestionError('Something went wrong!')));
-};
 
 export const clearQuestion = () => ({ type: types.CLEAR_QUESTION });
