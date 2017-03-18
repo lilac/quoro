@@ -1,12 +1,37 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { deleteAnswer } from '../../actions/active-question';
 
 const answer = (props) => {
-  const { content, answerId } = props;
+  const { content, answerId, userId, user, questionId } = props;
+  const { token, id: activeUserId } = user;
+  const xSign = (userId === activeUserId) ?
+    (
+      <button
+        className="btn btn-md"
+        onClick={() => props.deleteAnswer(answerId, questionId, token)}
+      >
+        DeleteX
+      </button>
+    ) : null;
+
   return (
     <div className="Answer">
+      {xSign}
       <p>{content}</p>
     </div>
   );
 };
 
-export default answer;
+answer.propTypes = {
+  content: PropTypes.string,
+  answerId: PropTypes.number,
+  userId: PropTypes.number,
+  user: PropTypes.object,
+  questionId: PropTypes.number,
+  deleteAnswer: PropTypes.func,
+};
+
+const mapStateToProps = state => ({ user: state.user.activeUser });
+
+export default connect(mapStateToProps, { deleteAnswer })(answer);

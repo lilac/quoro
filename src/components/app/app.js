@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { Route } from 'react-router-dom';
 import { fetchQuestions } from '../../actions/questions';
-import Navbar from '../navbar/navbar';
 import QuestionsList from '../questions-list/questions-list';
+import LastViewedQuestions from '../last-viewed-questions/last-viewed-questions';
+import QuestionForm from '../question-form/question-form';
 
 if (process.env.BROWSER) {
   require('./app.css');
@@ -17,14 +18,22 @@ class App extends Component {
   }
 
   render() {
-    if (!this.props.user) {
+    const { user, questions } = this.props;
+    if (!user) {
       return (<Redirect from="/" to="/login" />);
     }
 
     return (
-      <div className="App">
-        <Route path="/" render={() => (<Navbar title="Quoro" />)} />
-        <QuestionsList questions={this.props.questions} />
+      <div className="App container-fluid">
+        <div className="row">
+          <div className="col-9">
+            <QuestionForm />
+            <QuestionsList questions={questions} />
+          </div>
+          <div className="col-3">
+            <LastViewedQuestions />
+          </div>
+        </div>
       </div>
     );
   }
@@ -32,6 +41,7 @@ class App extends Component {
 
 App.propTypes = {
   user: PropTypes.object,
+  questions: PropTypes.array,
 };
 
 App.defaultProps = {

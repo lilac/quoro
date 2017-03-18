@@ -19,12 +19,12 @@ export const find = (id) => {
     .catch(() => serverError);
 };
 
-export const create = (content, userId) => {
-  if (!content || !userId) {
+export const create = (title, content, userId) => {
+  if (!title || !content || !userId) {
     return Promise.resolve(missingParams());
   }
 
-  return db.createQuestion(content, userId)
+  return db.createQuestion(title, content, userId)
     .then(() => successfulAction())
     .catch(() => serverError());
 };

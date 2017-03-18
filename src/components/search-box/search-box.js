@@ -9,24 +9,23 @@ class SearchBox extends Component {
     };
   }
 
-  onChange(e) {
-    this.setState({ query: e.target.value });
-  }
-
   onSubmit(e) {
     e.preventDefault();
-    this.props.submit(this.state.query);
+    this.props.searchQuestions(this.state.query);
   }
 
   render() {
     return (
-      <form className="SearchBox form-inline my-2 my-lg-0" onSubmit={e => this.onSubmit(e)}>
+      <form
+        className="SearchBox form-inline my-2 my-lg-0"
+        onSubmit={e => this.onSubmit(e)}
+      >
         <input
           className="SearchBox-input form-control mr-sm-2"
           value={this.state.query}
           type="text"
           placeholder="Search"
-          onChange={e => this.onChange(e)}
+          onChange={e => this.setState({ query: e.target.value })}
         />
         <button
           className="SearchBox-btn btn btn-outline-success my-2 my-sm-0"
@@ -41,7 +40,7 @@ class SearchBox extends Component {
 }
 
 SearchBox.propTypes = {
-  submit: PropTypes.func.isRequired,
+  searchQuestions: PropTypes.func,
 };
 
 export default SearchBox;

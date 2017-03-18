@@ -1,17 +1,17 @@
 import * as types from '../reducers/user';
-import { requestWithBody, request } from '../helpers/fetch-helper';
+import { requestWithBody } from '../helpers/fetch-helper';
 
 export const logInSuccess = user => ({ type: types.LOG_IN_SUCCESS, payload: user });
 
 export const logInError = message => ({ type: types.LOG_IN_ERROR, payload: message });
 
 export const logIn = (login, password) => dispatch =>
-  requestWithBody('http://localhost:8000/api/authorize', 'POST', { login, password })
+  requestWithBody('/api/authorize', 'POST', { login, password })
     .then((response) => {
-      if (response.ok) {
-        return response.json();
+      if (!response.ok) {
+        throw new Error();
       }
-      dispatch(logInError('Cannot log in, please try again later.'));
+      return response.json();
     })
     .then(response => dispatch(logInSuccess(response.result)))
     .catch(() => dispatch(logInError('Cannot log in, please try again later.')));
@@ -19,8 +19,13 @@ export const logIn = (login, password) => dispatch =>
 export const registerStatus = message => ({ type: types.REGISTER_STATUS, payload: message });
 
 export const register = userData => dispatch =>
-  requestWithBody('http://localhost:8000/api/users', 'POST', userData)
-  .then(response => response.json())
+  requestWithBody('/api/users', 'POST', userData)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error();
+    }
+    return response.json();
+  })
   .then((result) => {
     dispatch(registerStatus(result.message));
     setTimeout(() => dispatch(registerStatus('')), 5000);

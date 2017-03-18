@@ -7,7 +7,7 @@ import thunk from 'redux-thunk';
 
 import reducers from './reducers/index';
 import template from './template';
-import Routes from './routes';
+import Routes from './components/routes/routes';
 
 const store = createStore(reducers, undefined, applyMiddleware(thunk));
 
@@ -19,7 +19,7 @@ export default (req, res) => {
       context={context}
     >
       <Provider store={store}>
-        <Routes />
+        <Routes url={req.url} />
       </Provider>
     </StaticRouter>
   );

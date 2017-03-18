@@ -38,10 +38,9 @@ export const find = (qId) => {
   return db.findAnswers(qId)
     .then(answers =>
       answers.map((answer) => {
-        console.log(answer);
         const { answ_id: answerId, id_q: questionId, content, user_id: userId } = answer;
         return { answerId, questionId, content, userId };
-      })
+      }).reverse()
     )
     .then(answers => successfulAction(answers))
     .catch(() => serverError());

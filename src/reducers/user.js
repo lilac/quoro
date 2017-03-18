@@ -18,7 +18,7 @@ export default (state = initialState, action) => {
     }
     case LOG_IN_ERROR: {
       return Object.assign({}, state, {
-        error: action.payload,
+        message: action.payload,
       });
     }
     case REGISTER_STATUS: {

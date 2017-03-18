@@ -87,7 +87,7 @@ class DatabaseService {
   }
 
   deleteAnswer(id) {
-    const query = 'DELETE answers WHERE answ_id = $1;';
+    const query = 'DELETE FROM answers WHERE answ_id = $1;';
     const data = [id];
     return this.query(query, data);
   }
@@ -101,7 +101,8 @@ class DatabaseService {
   findQuestionWithContent(content) {
     const query = `SELECT id, content, title, user_id, added_at, username FROM questions, users WHERE questions.user_id = users.id AND content LIKE '%$1%';`;
     const data = [content];
-    return this.query(query, data);
+    return this.query(query, data)
+      .then(result => result.rows);
   }
 
   findQuestion(id) {

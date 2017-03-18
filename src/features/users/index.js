@@ -9,7 +9,6 @@ const router = Router();
 
 router.post('/', create);
 router.get('/:id', find);
-// router.get('/', login);
 router.use(auth);
 router.delete('/', remove);
 // not ready yet

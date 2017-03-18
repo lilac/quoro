@@ -5,17 +5,15 @@ import { BrowserRouter } from 'react-router-dom';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import reducer from './reducers/index';
-import Routes from './routes';
+import Routes from './components/routes/routes';
 
 const store = createStore(reducer, window.PRELOADED_STATE, applyMiddleware(thunk));
-
-console.log(window.PRELOADED_STATE);
 
 window.onload = () => {
   ReactDOM.render(
     <BrowserRouter>
       <Provider store={store}>
-        <Routes />
+        <Routes url={location.pathname} />
       </Provider>
     </BrowserRouter>, document.getElementById('root'));
 };

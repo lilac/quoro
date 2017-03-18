@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Spinner from '../spinner/spinner';
 import Answer from '../answer/answer';
 import List from '../list/list';
+import AnswerForm from '../answer-form/answer-form';
 import { fetchQuestion, clearQuestion } from '../../actions/active-question';
 
 class Question extends Component {
@@ -17,29 +18,32 @@ class Question extends Component {
   }
 
   render() {
-    if (!this.props.user) {
+    const { user } = this.props;
+    if (!user) {
       return (<Redirect to="/login" />);
     }
 
-    if (this.props.error) {
-      return (<p>{this.props.error}</p>);
+    const { question, author, answers, error } = this.props;
+
+    if (error) {
+      return (<p>{error}</p>);
     }
 
-    if (!this.props.question || !this.props.author || !this.props.answers) {
+    if (!question || !author || !answers) {
       return (<Spinner />);
     }
 
-    const { title, content, id } = this.props.question;
-    const answers = this.props.answers;
-    const { username, id: userId } = this.props.author;
+    const { title, content, id } = question;
+    const { username } = author;
     return (
       <div className="Question container">
         <div className="Question-content jumbotron">
           <h1>{title}</h1>
           <p>{content}</p>
-          <p>Question id: {id}, asked by {username} with id: {userId}</p>
+          <p>Asked by {username}</p>
         </div>
         <div className="Question-answers">
+          <AnswerForm questionId={id} />
           <List data={answers} component={Answer} />
         </div>
       </div>
@@ -47,7 +51,15 @@ class Question extends Component {
   }
 }
 
-Question.propTypes = {};
+Question.propTypes = {
+  question: PropTypes.object,
+  answers: PropTypes.array,
+  author: PropTypes.object,
+  error: PropTypes.string,
+  fetchQuestion: PropTypes.func,
+  clearQuestion: PropTypes.func,
+  user: PropTypes.object,
+};
 
 const mapStateToProps = state => ({
   user: state.user.activeUser,

@@ -1,4 +1,5 @@
-export const ADD_QUESTION = Symbol('ADD_QUESTION');
+export const ADD_QUESTION_SUCCESS = Symbol('ADD_QUESTION_SUCCESS');
+export const ADD_QUESTION_ERROR = Symbol('ADD_QUESTION_ERROR');
 export const FETCH_QUESTIONS_SUCCESS = Symbol('FETCH_QUESTIONS_SUCCESS');
 export const FETCH_QUESTIONS_ERROR = Symbol('FETCH_QUESTIONS_ERROR');
 export const ADD_LAST_VIEWED_QUESTION = Symbol('ADD_LAST_VIEWED_QUESTION');
@@ -11,15 +12,9 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case ADD_QUESTION: {
-      return Object.assign({}, state, {
-        questions: [...state.questions, action.payload],
-      });
-    }
-
     case ADD_LAST_VIEWED_QUESTION: {
       return Object.assign({}, state, {
-        lastViewedQuestions: [...state.lastViewedQuestions, action.payload],
+        lastViewedQuestions: [action.payload, ...state.lastViewedQuestions],
       });
     }
 
