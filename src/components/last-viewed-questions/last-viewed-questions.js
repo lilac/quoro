@@ -7,7 +7,7 @@ const lastViewedQuestions = (props) => {
   const { questions } = props;
   return (
     <div className="LastViewedQuestions">
-      <h3>Last viewed questions</h3>
+      <h5 className="text-center">Last viewed</h5>
       <List data={questions} component={QuestionPreview} />
     </div>
   );

@@ -32,6 +32,6 @@ answer.propTypes = {
   deleteAnswer: PropTypes.func,
 };
 
-const mapStateToProps = state => ({ user: state.user.activeUser });
+const mapStateToProps = state => ({ user: state.user });
 
 export default connect(mapStateToProps, { deleteAnswer })(answer);

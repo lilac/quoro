@@ -6,7 +6,8 @@ import LoginForm from '../login-form/login-form';
 
 
 const loginBox = (props) => {
-  if (props.user) {
+  const { token } = props.user;
+  if (token) {
     return (<Redirect to="/" />);
   }
 
@@ -33,6 +34,6 @@ const loginBox = (props) => {
   );
 };
 
-const mapStateToProps = state => ({ user: state.user.activeUser });
+const mapStateToProps = state => ({ user: state.user });
 
 export default connect(mapStateToProps, null)(loginBox);

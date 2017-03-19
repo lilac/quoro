@@ -1,12 +1,10 @@
 import * as types from '../reducers/active-question';
 import { request, requestWithBody } from '../helpers/fetch-helper';
 import { addToLastViewedQuestions } from './questions';
-
-const fetchQuestionError = msg =>
-  ({ type: types.FETCH_QUESTION_ERROR, payload: msg });
+import { changeMessage } from './message';
 
 const fetchQuestionSuccess = results =>
-  ({ type: types.FETCH_QUESTION_SUCCESS, payload: results });
+  ({ type: types.FETCH_QUESTION, payload: results });
 
 export const fetchQuestion = (id, token) => dispatch =>
     request(`/api/questions/${id}`, 'GET', { token })
@@ -40,16 +38,13 @@ export const fetchQuestion = (id, token) => dispatch =>
       dispatch(fetchQuestionSuccess(results));
       dispatch(addToLastViewedQuestions(question));
     })
-    .catch(() => dispatch(fetchQuestionError('Something went wrong!')));
+    .catch(() => dispatch(changeMessage('', false)));
 
 export const clearQuestion = () =>
   ({ type: types.CLEAR_QUESTION });
 
-const fetchAnswersError = () =>
-  ({ type: types.FETCH_ANSWERS_ERROR });
-
 const fetchAnswersSuccess = answers =>
-  ({ type: types.FETCH_ANSWERS_SUCCESS, payload: answers });
+  ({ type: types.FETCH_ANSWERS, payload: answers });
 
 export const fetchAnswers = (questionId, token) => dispatch =>
   request(`/api/answers/${questionId}`, 'GET', { token })
@@ -61,13 +56,7 @@ export const fetchAnswers = (questionId, token) => dispatch =>
     })
     .then(responseJson => responseJson.result)
     .then(answers => dispatch(fetchAnswersSuccess(answers)))
-    .catch(() => fetchAnswersError());
-
-const addAnswerSuccess = () =>
-  ({ type: types.ADD_ANSWER_SUCCESS });
-
-const addAnswerError = msg =>
-  ({ type: types.ADD_ANSWER_ERROR, payload: msg });
+    .catch(() => changeMessage('Failed to fetch answers.', false));
 
 export const addAnswer = (content, questionId, userId, token) => dispatch =>
   requestWithBody('/api/answers', 'POST', { content, questionId, userId, token })
@@ -76,16 +65,10 @@ export const addAnswer = (content, questionId, userId, token) => dispatch =>
         throw new Error();
       }
 
-      dispatch(addAnswerSuccess());
+      dispatch(changeMessage('Answer added.', true));
       return dispatch(fetchAnswers(questionId, token));
     })
-    .catch(() => dispatch(addAnswerError('ERROR')));
-
-const deleteAnswerSuccess = () =>
-  ({ type: types.DELETE_ANSWER_SUCCESS });
-
-const deleteAnswerError = msg =>
-  ({ type: types.DELETE_ANSWER_ERROR, payload: msg });
+    .catch(() => dispatch(changeMessage('Failed to add answer.', false)));
 
 export const deleteAnswer = (answerId, questionId, token) => dispatch =>
   request('/api/answers', 'DELETE', { id: answerId, token })
@@ -93,7 +76,7 @@ export const deleteAnswer = (answerId, questionId, token) => dispatch =>
       if (!response.ok) {
         throw new Error();
       }
-      dispatch(fetchAnswers(questionId, token));
-      return dispatch(deleteAnswerSuccess());
+      dispatch(changeMessage('Answer deleted.', true));
+      return dispatch(fetchAnswers(questionId, token));
     })
-    .catch(() => dispatch(deleteAnswerError('Couldnt delete the answer.')));
+    .catch(() => dispatch(changeMessage('Failed to delete answer.')));

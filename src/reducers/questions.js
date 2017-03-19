@@ -1,13 +1,9 @@
-export const ADD_QUESTION_SUCCESS = Symbol('ADD_QUESTION_SUCCESS');
-export const ADD_QUESTION_ERROR = Symbol('ADD_QUESTION_ERROR');
-export const FETCH_QUESTIONS_SUCCESS = Symbol('FETCH_QUESTIONS_SUCCESS');
-export const FETCH_QUESTIONS_ERROR = Symbol('FETCH_QUESTIONS_ERROR');
+export const FETCH_QUESTIONS = Symbol('FETCH_QUESTIONS');
 export const ADD_LAST_VIEWED_QUESTION = Symbol('ADD_LAST_VIEWED_QUESTION');
 
 const initialState = {
   questions: [],
   lastViewedQuestions: [],
-  error: '',
 };
 
 export default (state = initialState, action) => {
@@ -18,15 +14,9 @@ export default (state = initialState, action) => {
       });
     }
 
-    case FETCH_QUESTIONS_SUCCESS: {
+    case FETCH_QUESTIONS: {
       return Object.assign({}, state, {
         questions: action.payload,
-      });
-    }
-
-    case FETCH_QUESTIONS_ERROR: {
-      return Object.assign({}, state, {
-        error: action.payload,
       });
     }
 

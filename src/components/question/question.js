@@ -18,8 +18,8 @@ class Question extends Component {
   }
 
   render() {
-    const { user } = this.props;
-    if (!user) {
+    const { user: { token } } = this.props;
+    if (!token) {
       return (<Redirect to="/login" />);
     }
 
@@ -62,7 +62,7 @@ Question.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  user: state.user.activeUser,
+  user: state.user,
   question: state.activeQuestion.question,
   answers: state.activeQuestion.answers,
   author: state.activeQuestion.author,

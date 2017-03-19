@@ -50,7 +50,7 @@ class AnswerForm extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { token, id } = state.user.activeUser;
+  const { token, id } = state.user;
   return {
     token,
     userId: id

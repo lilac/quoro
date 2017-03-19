@@ -71,6 +71,6 @@ class QuestionForm extends Component {
   }
 }
 
-const mapStateToProps = state => ({ user: state.user.activeUser });
+const mapStateToProps = state => ({ user: state.user });
 
 export default connect(mapStateToProps, { addQuestion })(QuestionForm);

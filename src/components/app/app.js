@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import { Route } from 'react-router-dom';
 import { fetchQuestions } from '../../actions/questions';
 import QuestionsList from '../questions-list/questions-list';
 import LastViewedQuestions from '../last-viewed-questions/last-viewed-questions';
 import QuestionForm from '../question-form/question-form';
+import socket from '../../socket-client';
 
 if (process.env.BROWSER) {
   require('./app.css');
@@ -13,22 +13,56 @@ if (process.env.BROWSER) {
 
 class App extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      amountOfQuestions: 10,
+    };
+  }
+
   componentDidMount() {
-    this.props.fetchQuestions(10);
+    const { fetchQuestions } = this.props;
+    const { amountOfQuestions } = this.state;
+    console.log(amountOfQuestions);
+    fetchQuestions(amountOfQuestions);
+    let counter = 0;
+    socket.on('ADD_QUESTION', () => {
+      counter += 1;
+      if (counter > 4) {
+        fetchQuestions(amountOfQuestions);
+        counter = 0;
+      }
+    });
+  }
+
+  loadMore() {
+    const amountOfQuestions = this.state.amountOfQuestions + 10;
+    this.setState({ amountOfQuestions });
+    this.props.fetchQuestions(amountOfQuestions);
   }
 
   render() {
-    const { user, questions } = this.props;
-    if (!user) {
-      return (<Redirect from="/" to="/login" />);
+    const { user: { token }, questions } = this.props;
+    if (!token) {
+      return (<Redirect to="/login" />);
     }
 
     return (
       <div className="App container-fluid">
         <div className="row">
-          <div className="col-9">
+          <div className="col-3">
+            Cos tu bd
+          </div>
+          <div className="col-6">
             <QuestionForm />
             <QuestionsList questions={questions} />
+            <button
+              className="btn btn-info"
+              onClick={() => this.loadMore()}
+            >
+              Load more..
+            </button>
           </div>
           <div className="col-3">
             <LastViewedQuestions />
@@ -42,6 +76,7 @@ class App extends Component {
 App.propTypes = {
   user: PropTypes.object,
   questions: PropTypes.array,
+  fetchQuestions: PropTypes.func,
 };
 
 App.defaultProps = {
@@ -49,6 +84,6 @@ App.defaultProps = {
 };
 
 const mapStateToProps = state =>
-  ({ questions: state.questions.questions, user: state.user.activeUser });
+  ({ questions: state.questions.questions, user: state.user });
 
 export default connect(mapStateToProps, { fetchQuestions })(App);

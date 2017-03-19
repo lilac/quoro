@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import SearchBox from '../search-box/search-box';
+import { logOut } from '../../actions/user';
 
 if (process.env.BROWSER) {
   require('./navbar.css');
@@ -30,11 +32,19 @@ const navbar = (props) => {
         className="Navbar-title navbar-brand"
         to="/"
       >
-        {props.title}
+        Quoro
       </Link>
 
       <div className="collapse navbar-collapse" id="navbarText">
         <ul className="navbar-nav mr-auto">
+          <li className="nav-item">
+            <button
+              className="btn btn-info"
+              onClick={() => props.logOut(props.username)}
+            >
+              Log out
+            </button>
+          </li>
         </ul>
         <SearchBox submit={query => console.log(query)} />
       </div>
@@ -43,14 +53,10 @@ const navbar = (props) => {
 };
 
 navbar.propTypes = {
-  title: PropTypes.string,
-  username: PropTypes.string,
-  searchQuestions: PropTypes.func,
+  logOut: PropTypes.func.isRequired,
+  username: PropTypes.string.isRequired,
 };
 
-navbar.defaultProps = {
-  title: 'Quoro',
-  username: 'Unknown',
-};
+const mapStateToProps = state => ({ username: state.user.username });
 
-export default navbar;
+export default connect(mapStateToProps, { logOut })(navbar);

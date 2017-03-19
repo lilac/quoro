@@ -25,7 +25,10 @@ export const create = (title, content, userId) => {
   }
 
   return db.createQuestion(title, content, userId)
-    .then(() => successfulAction())
+    .then(() => {
+      global.socket.emit('ADD_QUESTION');
+      return successfulAction();
+    })
     .catch(() => serverError());
 };
 
