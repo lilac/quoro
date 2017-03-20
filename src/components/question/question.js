@@ -6,6 +6,7 @@ import Answer from '../answer/answer';
 import List from '../list/list';
 import AnswerForm from '../answer-form/answer-form';
 import { fetchQuestion, clearQuestion } from '../../actions/active-question';
+import { deleteQuestion } from '../../actions/questions';
 
 class Question extends Component {
   componentDidMount() {
@@ -23,21 +24,24 @@ class Question extends Component {
       return (<Redirect to="/login" />);
     }
 
-    const { question, author, answers, error } = this.props;
+    console.log(this.props);
 
-    if (error) {
-      return (<p>{error}</p>);
-    }
+    const { question, author, answers } = this.props;
 
-    if (!question || !author || !answers) {
-      return (<Spinner />);
-    }
-
-    const { title, content, id } = question;
-    const { username } = author;
+    const { title, content, userId, id: questionId } = question;
+    const { username, id } = author;
+    const xSign = id === userId ? (
+      <button
+        className="btn btn-md btn-warning"
+        onClick={() => this.props.deleteQuestion(questionId, token)}
+      >
+        Delete
+      </button>
+      ) : null;
     return (
       <div className="Question container">
         <div className="Question-content jumbotron">
+          {xSign}
           <h1>{title}</h1>
           <p>{content}</p>
           <p>Asked by {username}</p>
@@ -55,10 +59,10 @@ Question.propTypes = {
   question: PropTypes.object,
   answers: PropTypes.array,
   author: PropTypes.object,
-  error: PropTypes.string,
-  fetchQuestion: PropTypes.func,
-  clearQuestion: PropTypes.func,
+  fetchQuestion: PropTypes.func.isRequired,
+  clearQuestion: PropTypes.func.isRequired,
   user: PropTypes.object,
+  deleteQuestion: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -66,7 +70,6 @@ const mapStateToProps = state => ({
   question: state.activeQuestion.question,
   answers: state.activeQuestion.answers,
   author: state.activeQuestion.author,
-  error: state.activeQuestion.error,
 });
 
-export default connect(mapStateToProps, { fetchQuestion, clearQuestion })(Question);
+export default connect(mapStateToProps, { fetchQuestion, clearQuestion, deleteQuestion })(Question);

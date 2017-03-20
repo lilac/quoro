@@ -34,6 +34,7 @@ class QuestionForm extends Component {
   render() {
     return (
       <div className="QuestionForm container">
+        <h2>Ask Question</h2>
         <form
           onSubmit={e => this.onSubmit(e)}
         >
@@ -60,10 +61,10 @@ class QuestionForm extends Component {
             />
           </div>
           <button
-            className="btn btn-success"
+            className="btn btn-success btn-block"
             onClick={e => this.onSubmit(e)}
           >
-            Add
+            Ask
           </button>
         </form>
       </div>

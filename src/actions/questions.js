@@ -30,3 +30,49 @@ export const addQuestion = (title, content, token, amount = 10) => dispatch =>
       dispatch(fetchQuestions(amount));
     })
     .catch(() => dispatch(changeMessage('Failed to add question.', false)));
+
+export const searchQuestionsSuccess = questions =>
+  ({ type: types.SEARCH_QUESTIONS_SUCCESS, payload: questions });
+
+export const searchQuestions = query => (dispatch) => {
+  if (!query) {
+    return dispatch(searchQuestionsSuccess([]));
+  }
+
+  return request('/api/questions/query', 'GET', { query })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error();
+      }
+      return response.json();
+    })
+    .then(({ result }) => {
+      dispatch(searchQuestionsSuccess(result));
+    })
+    .catch(() => changeMessage('Failed to fetch questions.'));
+};
+
+const setUserQuestions = questions =>
+  ({ type: types.SET_USER_QUESTIONS, payload: questions });
+
+export const getUserQuestions = id => dispatch =>
+  request(`/api/users/${id}/questions`, 'GET', {})
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error();
+      }
+      return response.json();
+    })
+    .then(({ result }) => dispatch(setUserQuestions(result)))
+    .catch(() => dispatch(changeMessage('Failed to fetch questions.', false)));
+
+export const deleteQuestion = (id, token) => dispatch =>
+  request('/api/questions', 'DELETE', { id, token })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error();
+      }
+      return response.json();
+    })
+    .then(() => dispatch(fetchQuestions(10)))
+    .catch(() => dispatch(changeMessage('Failed to delete question.')));

@@ -37,12 +37,28 @@ export const findLast = (amount) => {
     return Promise.resolve(missingParams());
   }
   return db.findLastQuestions(amount)
-    .then((results) => {
-      if (!results) {
-        throw new Error();
-      }
-      return results.map(question => parseQuestion(question));
-    })
+    .then(results => results.map(question => parseQuestion(question)))
     .then(questions => successfulAction(questions))
+    .catch(() => serverError());
+};
+
+export const findWithQuery = (query) => {
+  if (!query) {
+    return Promise.resolve(missingParams());
+  }
+
+  return db.findQuestionsWithQuery(query)
+    .then(questions => questions.map(question => parseQuestion(question)))
+    .then(questions => successfulAction(questions))
+    .catch(() => serverError());
+};
+
+export const remove = (id) => {
+  if (!id) {
+    return Promise.resolve(missingParams());
+  }
+
+  return db.deleteQuestion(id)
+    .then(() => successfulAction())
     .catch(() => serverError());
 };

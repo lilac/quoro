@@ -7,6 +7,7 @@ import NotFound from '../not-found/not-found';
 import RegisterForm from '../register-form/register-form';
 import Navbar from '../navbar/navbar';
 import Alert from '../alert/alert';
+import UserPanel from '../user-panel/user-panel';
 
 if (process.env.BROWSER) {
   require('./routes.css');
@@ -20,6 +21,7 @@ const routes = () => (
         <Route path="/login" component={LoginBox} />
         <Route path="/register" component={RegisterForm} />
         <Route path="/questions/:id" component={Question} />
+        <Route path="/user" component={UserPanel} />
         <Route path="/" exact component={App} />
         <Route component={NotFound} />
       </Switch>

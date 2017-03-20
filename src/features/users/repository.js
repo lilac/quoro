@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt-nodejs';
 import db from '../../db';
 import statusCreator, { serverError, missingParams, resourceCreated, successfulAction } from '../common/responses-with-status';
+import parseQuestion from '../common/parse-question';
 
 export const create = (username, login, password, email) => {
   if (!username || !login || !password || !email) {
@@ -66,3 +67,13 @@ export const find = (id) => {
     .catch(() => serverError());
 };
 
+export const findQuestions = (id) => {
+  if (!id) {
+    return Promise.resolve(missingParams());
+  }
+
+  return db.findUsersQuestions(id)
+    .then(questions => questions.map(question => parseQuestion(question)))
+    .then(questions => successfulAction(questions))
+    .catch(() => serverError());
+};

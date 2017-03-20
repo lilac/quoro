@@ -5,6 +5,7 @@ import { fetchQuestions } from '../../actions/questions';
 import QuestionsList from '../questions-list/questions-list';
 import LastViewedQuestions from '../last-viewed-questions/last-viewed-questions';
 import QuestionForm from '../question-form/question-form';
+import Modal from '../question-modal/question-modal';
 import socket from '../../socket-client';
 
 if (process.env.BROWSER) {
@@ -55,14 +56,30 @@ class App extends Component {
             Cos tu bd
           </div>
           <div className="col-6">
-            <QuestionForm />
+            <div className="App-question-form">
+              <div className="text-center">
+                <button
+                  type="button"
+                  className="btn btn-primary btn-block"
+                  data-toggle="modal"
+                  data-target="#questionModal"
+                >
+                  Ask Question
+                </button>
+              </div>
+              <Modal modalId="questionModal" title="Ask Question">
+                <QuestionForm />
+              </Modal>
+            </div>
             <QuestionsList questions={questions} />
-            <button
-              className="btn btn-info"
-              onClick={() => this.loadMore()}
-            >
-              Load more..
-            </button>
+            <div className="text-center">
+              <button
+                className="btn btn-info"
+                onClick={() => this.loadMore()}
+              >
+                Load more..
+              </button>
+            </div>
           </div>
           <div className="col-3">
             <LastViewedQuestions />
@@ -75,8 +92,8 @@ class App extends Component {
 
 App.propTypes = {
   user: PropTypes.object,
-  questions: PropTypes.array,
-  fetchQuestions: PropTypes.func,
+  questions: PropTypes.array.isRequired,
+  fetchQuestions: PropTypes.func.isRequired,
 };
 
 App.defaultProps = {

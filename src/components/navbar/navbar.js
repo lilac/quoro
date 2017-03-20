@@ -35,18 +35,14 @@ const navbar = (props) => {
         Quoro
       </Link>
 
+      <SearchBox />
+
       <div className="collapse navbar-collapse" id="navbarText">
-        <ul className="navbar-nav mr-auto">
+        <ul className="navbar-nav">
           <li className="nav-item">
-            <button
-              className="btn btn-info"
-              onClick={() => props.logOut(props.username)}
-            >
-              Log out
-            </button>
+            Hello, <Link to="/user">{props.username}</Link>
           </li>
         </ul>
-        <SearchBox submit={query => console.log(query)} />
       </div>
     </nav>
   );
@@ -60,3 +56,11 @@ navbar.propTypes = {
 const mapStateToProps = state => ({ username: state.user.username });
 
 export default connect(mapStateToProps, { logOut })(navbar);
+
+
+            // <button
+            //   className="btn btn-info"
+            //   onClick={() => props.logOut(props.username)}
+            // >
+            //   Log out
+            // </button>

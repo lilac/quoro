@@ -1,6 +1,10 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router-dom';
 
+if (process.env.BROWSER) {
+  require('./question-preview.css');
+}
+
 const questionPreview = (props) => {
   const { id, title, content, addedAt} = props;
   if (!id) {
@@ -15,9 +19,9 @@ const questionPreview = (props) => {
   return (
     <Link
       to={`/questions/${id}`}
-      className="list-group-item list-group-item-action flex-column align-items-start"
+      className="QuestionPreview list-group-item list-group-item-action flex-column align-items-start"
     >
-      <div className="d-flex w-100 justify-content-between">
+      <div className="d-flex w-100 justify-content-between text-center">
         <h5 className="mb-1">{title}</h5>
         <small>{daysAgoText}</small>
       </div>

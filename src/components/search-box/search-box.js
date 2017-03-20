@@ -1,46 +1,50 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import List from '../list/list';
+import QuestionPreview from '../question-preview/question-preview';
+import { searchQuestions, searchQuestionsSuccess } from '../../actions/questions';
+
+if (process.env.BROWSER) {
+  require('./search-box.css');
+}
 
 class SearchBox extends Component {
-  constructor(props) {
-    super(props);
 
-    this.state = {
-      query: '',
-    };
-  }
-
-  onSubmit(e) {
-    e.preventDefault();
-    this.props.searchQuestions(this.state.query);
+  onChange(query) {
+    if (!query) {
+      this.props.searchQuestionsSuccess([]);
+      return null;
+    }
+    return this.props.searchQuestions(query);
   }
 
   render() {
+    const { questions } = this.props;
+    const cuttedQuestions = questions.slice(0, 4);
+    const dropdown = cuttedQuestions.length ? (
+      <div className="SearchBox-dropdown">
+        <List data={cuttedQuestions} component={QuestionPreview} />
+      </div>
+    ) : null;
     return (
-      <form
-        className="SearchBox form-inline my-2 my-lg-0"
-        onSubmit={e => this.onSubmit(e)}
-      >
+      <div className="SearchBox">
         <input
           className="SearchBox-input form-control mr-sm-2"
-          value={this.state.query}
           type="text"
           placeholder="Search"
-          onChange={e => this.setState({ query: e.target.value })}
+          onChange={e => this.onChange(e.target.value)}
         />
-        <button
-          className="SearchBox-btn btn btn-outline-success my-2 my-sm-0"
-          type="submit"
-          onClick={e => this.onSubmit(e)}
-        >
-        Search
-        </button>
-      </form>
+        {dropdown}
+      </div>
     );
   }
 }
 
 SearchBox.propTypes = {
-  searchQuestions: PropTypes.func,
+  searchQuestions: PropTypes.func.isRequired,
 };
 
-export default SearchBox;
+const mapStateToProps = state =>
+  ({ questions: state.questions.searchByQueryQuestions });
+
+export default connect(mapStateToProps, { searchQuestions, searchQuestionsSuccess })(SearchBox);

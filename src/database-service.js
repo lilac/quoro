@@ -98,9 +98,9 @@ class DatabaseService {
     return this.query(query, data);
   }
 
-  findQuestionWithContent(content) {
-    const query = `SELECT id, content, title, user_id, added_at, username FROM questions, users WHERE questions.user_id = users.id AND content LIKE '%$1%';`;
-    const data = [content];
+  findQuestionsWithQuery(title) {
+    const query = 'SELECT * FROM questions WHERE title ~ $1;';
+    const data = [title];
     return this.query(query, data)
       .then(result => result.rows);
   }
@@ -129,8 +129,14 @@ class DatabaseService {
     const query = 'SELECT * FROM questions ORDER BY added_at DESC LIMIT $1;';
     const data = [amount];
     return this.query(query, data)
-      .then(result => result.rows)
-      .catch(() => null);
+      .then(result => result.rows);
+  }
+
+  findUsersQuestions(userId) {
+    const query = 'SELECT * FROM questions WHERE user_id = $1 ORDER BY added_at;';
+    const data = [userId];
+    return this.query(query, data)
+      .then(result => result.rows);
   }
 
 }
