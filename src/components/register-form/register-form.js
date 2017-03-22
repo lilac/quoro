@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { register } from '../../actions/user';
@@ -137,6 +137,11 @@ class RegisterForm extends Component {
     );
   }
 }
+
+RegisterForm.propTypes = {
+  register: PropTypes.func.isRequired,
+  user: PropTypes.object,
+};
 
 const mapStateToProps = state => ({ user: state.user });
 

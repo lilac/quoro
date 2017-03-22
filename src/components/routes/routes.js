@@ -1,5 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router';
+
 import LoginBox from '../login-box/login-box';
 import NotFound from '../not-found/not-found';
 import RegisterForm from '../register-form/register-form';

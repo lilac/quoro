@@ -1,5 +1,10 @@
+.SearchBox {
+  position: relative;
+}
+
 .SearchBox-dropdown {
   position: absolute;
-  top: 65px;
-  left: 75px;
+  top: 60px;
+  left: 0;
+  width: 320px;
 }

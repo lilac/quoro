@@ -1,5 +1,9 @@
 import React, { PropTypes } from 'react';
 
+if (process.env.BROWSER) {
+  require('./list.css');
+}
+
 const renderList = (data, Component) =>
   data.map(props => (<Component key={Math.random()} {...props} />));
 
@@ -20,6 +24,7 @@ const list = (props) => {
 list.propTypes = {
   component: PropTypes.func.isRequired,
   data: PropTypes.array.isRequired,
+  className: PropTypes.string,
 };
 
 export default list;

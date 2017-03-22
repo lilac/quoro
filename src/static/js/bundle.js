@@ -4167,6 +4167,10 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+if (true) {
+  __webpack_require__(369);
+}
+
 var renderList = function renderList(data, Component) {
   return data.map(function (props) {
     return _react2.default.createElement(Component, _extends({ key: Math.random() }, props));
@@ -4189,7 +4193,8 @@ var list = function list(props) {
 
 list.propTypes = {
   component: _react.PropTypes.func.isRequired,
-  data: _react.PropTypes.array.isRequired
+  data: _react.PropTypes.array.isRequired,
+  className: _react.PropTypes.string
 };
 
 exports.default = list;
@@ -4945,6 +4950,13 @@ var questionPreview = function questionPreview(props) {
       content
     )
   );
+};
+
+questionPreview.propTypes = {
+  id: _react.PropTypes.number.isRequired,
+  title: _react.PropTypes.string.isRequired,
+  content: _react.PropTypes.string.isRequired,
+  addedAt: _react.PropTypes.object.isRequired
 };
 
 exports.default = questionPreview;
@@ -16503,6 +16515,13 @@ var AnswerForm = function (_Component) {
   return AnswerForm;
 }(_react.Component);
 
+AnswerForm.propTypes = {
+  addAnswer: _react.PropTypes.func.isRequired,
+  questionId: _react.PropTypes.number.isRequired,
+  userId: _react.PropTypes.number.isRequired,
+  token: _react.PropTypes.string.isRequired
+};
+
 var mapStateToProps = function mapStateToProps(state) {
   var _state$user = state.user,
       token = _state$user.token,
@@ -16536,6 +16555,10 @@ var _reactRedux = __webpack_require__(9);
 var _activeQuestion = __webpack_require__(49);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+if (true) {
+  __webpack_require__(367);
+}
 
 var answer = function answer(props) {
   var content = props.content,
@@ -16603,9 +16626,11 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(9);
 
-var _reactRouter = __webpack_require__(8);
-
 var _questions = __webpack_require__(23);
+
+var _socketClient = __webpack_require__(164);
+
+var _socketClient2 = _interopRequireDefault(_socketClient);
 
 var _questionsList = __webpack_require__(159);
 
@@ -16622,10 +16647,6 @@ var _questionForm2 = _interopRequireDefault(_questionForm);
 var _questionModal = __webpack_require__(157);
 
 var _questionModal2 = _interopRequireDefault(_questionModal);
-
-var _socketClient = __webpack_require__(164);
-
-var _socketClient2 = _interopRequireDefault(_socketClient);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -16808,6 +16829,10 @@ var lastViewedQuestions = function lastViewedQuestions(props) {
   );
 };
 
+lastViewedQuestions.propTypes = {
+  questions: _react.PropTypes.array
+};
+
 var mapStateToProps = function mapStateToProps(state) {
   return { questions: state.questions.lastViewedQuestions };
 };
@@ -16831,8 +16856,6 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(9);
 
-var _reactRouter = __webpack_require__(8);
-
 var _reactRouterDom = __webpack_require__(29);
 
 var _loginForm = __webpack_require__(153);
@@ -16841,11 +16864,16 @@ var _loginForm2 = _interopRequireDefault(_loginForm);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+if (true) {
+  __webpack_require__(371);
+}
+
 var loginBox = function loginBox(props) {
   var token = props.user.token;
 
+
   if (token) {
-    return _react2.default.createElement(_reactRouter.Redirect, { to: '/' });
+    return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/' });
   }
 
   return _react2.default.createElement(
@@ -16856,13 +16884,19 @@ var loginBox = function loginBox(props) {
       { className: 'welcome-text text-center' },
       _react2.default.createElement(
         'h1',
-        null,
+        { className: 'display-1' },
         'Quoro'
       ),
       _react2.default.createElement(
         'p',
-        null,
-        'Description'
+        { className: 'lead' },
+        'Going online and asking ',
+        _react2.default.createElement(
+          'strong',
+          null,
+          'questions'
+        ),
+        ' is the best way to learn. - Tom Felton'
       )
     ),
     _react2.default.createElement(
@@ -16875,7 +16909,7 @@ var loginBox = function loginBox(props) {
           'div',
           { className: 'col text-center' },
           _react2.default.createElement(
-            'p',
+            'h2',
             null,
             'Dont wish it were easier, wish you were better!'
           )
@@ -16884,15 +16918,20 @@ var loginBox = function loginBox(props) {
           'div',
           { className: 'col' },
           _react2.default.createElement(_loginForm2.default, null),
+          'Dont have an account yet?\xA0',
           _react2.default.createElement(
             _reactRouterDom.Link,
             { to: '/register' },
-            'Register'
+            'Register.'
           )
         )
       )
     )
   );
+};
+
+loginBox.propTypes = {
+  user: _react.PropTypes.object
 };
 
 var mapStateToProps = function mapStateToProps(state) {
@@ -16929,6 +16968,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+if (true) {
+  __webpack_require__(373);
+}
 
 var LoginForm = function (_Component) {
   _inherits(LoginForm, _Component);
@@ -17032,6 +17075,10 @@ var LoginForm = function (_Component) {
   return LoginForm;
 }(_react.Component);
 
+LoginForm.propTypes = {
+  logIn: _react.PropTypes.func.isRequired
+};
+
 exports.default = (0, _reactRedux.connect)(null, { logIn: _user.logIn })(LoginForm);
 
 /***/ }),
@@ -17053,11 +17100,11 @@ var _reactRouterDom = __webpack_require__(29);
 
 var _reactRedux = __webpack_require__(9);
 
+var _user = __webpack_require__(51);
+
 var _searchBox = __webpack_require__(161);
 
 var _searchBox2 = _interopRequireDefault(_searchBox);
-
-var _user = __webpack_require__(51);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -17068,40 +17115,33 @@ if (true) {
 var navbar = function navbar(props) {
   return _react2.default.createElement(
     'nav',
-    { className: 'Navbar navbar fixed-top navbar-toggleable-md navbar-light bg-faded' },
-    _react2.default.createElement(
-      'button',
-      {
-        className: 'navbar-toggler navbar-toggler-right',
-        type: 'button',
-        'data-toggle': 'collapse',
-        'data-target': '#navbarSupportedContent',
-        'aria-controls': 'navbarSupportedContent',
-        'aria-expanded': 'false',
-        'aria-label': 'Toggle navigation'
-      },
-      _react2.default.createElement('span', {
-        className: 'navbar-toggler-icon'
-      })
-    ),
-    _react2.default.createElement(
-      _reactRouterDom.Link,
-      {
-        className: 'Navbar-title navbar-brand',
-        to: '/'
-      },
-      'Quoro'
-    ),
-    _react2.default.createElement(_searchBox2.default, null),
+    { className: 'Navbar navbar fixed-top navbar-light bg-faded' },
     _react2.default.createElement(
       'div',
-      { className: 'collapse navbar-collapse', id: 'navbarText' },
+      { className: 'd-flex justify-content-between' },
       _react2.default.createElement(
-        'ul',
-        { className: 'navbar-nav' },
+        'div',
+        null,
         _react2.default.createElement(
-          'li',
-          { className: 'nav-item' },
+          _reactRouterDom.Link,
+          {
+            className: 'Navbar-title navbar-brand',
+            to: '/'
+          },
+          'Quoro'
+        )
+      ),
+      _react2.default.createElement(
+        'div',
+        { className: 'Navbar-search' },
+        _react2.default.createElement(_searchBox2.default, null)
+      ),
+      _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'p',
+          null,
           'Hello, ',
           _react2.default.createElement(
             _reactRouterDom.Link,
@@ -17150,6 +17190,10 @@ var _react2 = _interopRequireDefault(_react);
 var _reactRouterDom = __webpack_require__(29);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+if (true) {
+  __webpack_require__(375);
+}
 
 var notFound = function notFound() {
   return _react2.default.createElement(
@@ -17315,6 +17359,11 @@ var QuestionForm = function (_Component) {
   return QuestionForm;
 }(_react.Component);
 
+QuestionForm.propTypes = {
+  user: _react.PropTypes.object,
+  addQuestion: _react.PropTypes.func.isRequired
+};
+
 var mapStateToProps = function mapStateToProps(state) {
   return { user: state.user };
 };
@@ -17338,54 +17387,67 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+if (true) {
+  __webpack_require__(379);
+}
+
 var modal = function modal(props) {
+  var modalId = props.modalId,
+      title = props.title,
+      children = props.children;
+
   return _react2.default.createElement(
-    "div",
+    'div',
     {
-      className: "modal fade",
-      id: props.modalId,
-      tabIndex: "-1",
-      role: "dialog",
-      "aria-labelledby": props.title,
-      "aria-hidden": "true"
+      className: 'modal fade',
+      id: modalId,
+      tabIndex: '-1',
+      role: 'dialog',
+      'aria-labelledby': title,
+      'aria-hidden': 'true'
     },
     _react2.default.createElement(
-      "div",
-      { className: "modal-dialog", role: "document" },
+      'div',
+      { className: 'modal-dialog', role: 'document' },
       _react2.default.createElement(
-        "div",
-        { className: "modal-content" },
+        'div',
+        { className: 'modal-content' },
         _react2.default.createElement(
-          "div",
-          { className: "modal-header" },
+          'div',
+          { className: 'modal-header' },
           _react2.default.createElement(
-            "h5",
-            { className: "modal-title" },
-            props.title
+            'h5',
+            { className: 'modal-title' },
+            title
           ),
           _react2.default.createElement(
-            "button",
+            'button',
             {
-              type: "button",
-              className: "close",
-              "data-dismiss": "modal",
-              "aria-label": "Close"
+              type: 'button',
+              className: 'close',
+              'data-dismiss': 'modal',
+              'aria-label': 'Close'
             },
             _react2.default.createElement(
-              "span",
-              { "aria-hidden": "true" },
-              "\xD7"
+              'span',
+              { 'aria-hidden': 'true' },
+              '\xD7'
             )
           )
         ),
         _react2.default.createElement(
-          "div",
-          { className: "modal-body" },
-          props.children
+          'div',
+          { className: 'modal-body' },
+          children
         )
       )
     )
   );
+};
+
+modal.propTypes = {
+  title: _react.PropTypes.string.isRequired,
+  modalId: _react.PropTypes.number.isRequired
 };
 
 exports.default = modal;
@@ -17407,13 +17469,13 @@ var _react = __webpack_require__(2);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouter = __webpack_require__(8);
-
 var _reactRedux = __webpack_require__(9);
 
-var _spinner = __webpack_require__(162);
+var _reactRouterDom = __webpack_require__(29);
 
-var _spinner2 = _interopRequireDefault(_spinner);
+var _activeQuestion = __webpack_require__(49);
+
+var _questions = __webpack_require__(23);
 
 var _answer = __webpack_require__(149);
 
@@ -17427,10 +17489,6 @@ var _answerForm = __webpack_require__(148);
 
 var _answerForm2 = _interopRequireDefault(_answerForm);
 
-var _activeQuestion = __webpack_require__(49);
-
-var _questions = __webpack_require__(23);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -17439,13 +17497,22 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+if (true) {
+  __webpack_require__(377);
+}
+
 var Question = function (_Component) {
   _inherits(Question, _Component);
 
-  function Question() {
+  function Question(props) {
     _classCallCheck(this, Question);
 
-    return _possibleConstructorReturn(this, (Question.__proto__ || Object.getPrototypeOf(Question)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Question.__proto__ || Object.getPrototypeOf(Question)).call(this, props));
+
+    _this.state = {
+      isDeleted: false
+    };
+    return _this;
   }
 
   _createClass(Question, [{
@@ -17468,8 +17535,12 @@ var Question = function (_Component) {
           question = _props.question,
           author = _props.author,
           answers = _props.answers,
-          isLoading = _props.isLoading;
+          token = _props.user.token;
 
+
+      if (this.state.isDeleted) {
+        return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/' });
+      }
 
       if (!question) {
         return null;
@@ -17487,16 +17558,15 @@ var Question = function (_Component) {
         {
           className: 'btn btn-md btn-warning',
           onClick: function onClick() {
-            return _this2.props.deleteQuestion(questionId, token);
+            _this2.props.deleteQuestion(questionId, token);
+            _this2.setState({ isDeleted: true });
           }
         },
         'Delete'
       ) : null;
-      var spinner = isLoading ? _react2.default.createElement(_spinner2.default, null) : null;
       return _react2.default.createElement(
         'div',
         { className: 'Question container' },
-        spinner,
         _react2.default.createElement(
           'div',
           { className: 'Question-content jumbotron' },
@@ -17539,7 +17609,8 @@ Question.propTypes = {
   fetchQuestion: _react.PropTypes.func.isRequired,
   clearQuestion: _react.PropTypes.func.isRequired,
   user: _react.PropTypes.object,
-  deleteQuestion: _react.PropTypes.func.isRequired
+  deleteQuestion: _react.PropTypes.func.isRequired,
+  match: _react.PropTypes.object.isRequired
 };
 
 var mapStateToProps = function mapStateToProps(state) {
@@ -17832,6 +17903,11 @@ var RegisterForm = function (_Component) {
   return RegisterForm;
 }(_react.Component);
 
+RegisterForm.propTypes = {
+  register: _react.PropTypes.func.isRequired,
+  user: _react.PropTypes.object
+};
+
 var mapStateToProps = function mapStateToProps(state) {
   return { user: state.user };
 };
@@ -17857,6 +17933,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(9);
 
+var _questions = __webpack_require__(23);
+
 var _list = __webpack_require__(30);
 
 var _list2 = _interopRequireDefault(_list);
@@ -17864,8 +17942,6 @@ var _list2 = _interopRequireDefault(_list);
 var _questionPreview = __webpack_require__(38);
 
 var _questionPreview2 = _interopRequireDefault(_questionPreview);
-
-var _questions = __webpack_require__(23);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -17929,7 +18005,9 @@ var SearchBox = function (_Component) {
 }(_react.Component);
 
 SearchBox.propTypes = {
-  setSearchedQuestions: _react.PropTypes.func.isRequired
+  setSearchedQuestions: _react.PropTypes.func.isRequired,
+  searchQuestions: _react.PropTypes.func.isRequired,
+  questions: _react.PropTypes.array
 };
 
 var mapStateToProps = function mapStateToProps(state) {
@@ -18004,9 +18082,9 @@ var _react = __webpack_require__(2);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(29);
-
 var _reactRedux = __webpack_require__(9);
+
+var _questions = __webpack_require__(23);
 
 var _questionPreview = __webpack_require__(38);
 
@@ -18015,8 +18093,6 @@ var _questionPreview2 = _interopRequireDefault(_questionPreview);
 var _list = __webpack_require__(30);
 
 var _list2 = _interopRequireDefault(_list);
-
-var _questions = __webpack_require__(23);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -18036,8 +18112,8 @@ var UserPanel = function (_Component) {
   }
 
   _createClass(UserPanel, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
+    key: 'componentWillMount',
+    value: function componentWillMount() {
       this.props.getUserQuestions(this.props.user.id);
     }
   }, {
@@ -18092,6 +18168,12 @@ var UserPanel = function (_Component) {
 
   return UserPanel;
 }(_react.Component);
+
+UserPanel.propTypes = {
+  questions: _react.PropTypes.array,
+  user: _react.PropTypes.object,
+  getUserQuestions: _react.PropTypes.func.isRequired
+};
 
 var mapStateToProps = function mapStateToProps(state) {
   return { user: state.user, questions: state.questions.userQuestions };
@@ -18608,7 +18690,7 @@ exports = module.exports = __webpack_require__(15)();
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, ".Navbar-search {\n  width: 320px;\n}\n", ""]);
 
 // exports
 
@@ -18664,7 +18746,7 @@ exports = module.exports = __webpack_require__(15)();
 
 
 // module
-exports.push([module.i, ".SearchBox-dropdown {\n  position: absolute;\n  top: 65px;\n  left: 75px;\n}\n", ""]);
+exports.push([module.i, ".SearchBox {\n  position: relative;\n}\n\n.SearchBox-dropdown {\n  position: absolute;\n  top: 60px;\n  left: 0;\n  width: 320px;\n}\n", ""]);
 
 // exports
 
@@ -39065,7 +39147,7 @@ var startLoading = exports.startLoading = function startLoading() {
 };
 
 var endLoading = exports.endLoading = function endLoading() {
-  var time = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 500;
+  var time = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 450;
   return function (dispatch) {
     return setTimeout(function () {
       dispatch(setState(false));
@@ -39186,6 +39268,288 @@ if(false) {
 	if(!content.locals) {
 		module.hot.accept("!!../../../node_modules/css-loader/index.js!./authorized.css", function() {
 			var newContent = require("!!../../../node_modules/css-loader/index.js!./authorized.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 364 */,
+/* 365 */,
+/* 366 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(15)();
+// imports
+
+
+// module
+exports.push([module.i, "/* answer.css */\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 367 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(366);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// add the styles to the DOM
+var update = __webpack_require__(17)(content, {});
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!./answer.css", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!./answer.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 368 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(15)();
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/***/ }),
+/* 369 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(368);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// add the styles to the DOM
+var update = __webpack_require__(17)(content, {});
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!./list.css", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!./list.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 370 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(15)();
+// imports
+
+
+// module
+exports.push([module.i, "/* login-box.css */\n\n.LoginBox {\n  margin-top: 70px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 371 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(370);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// add the styles to the DOM
+var update = __webpack_require__(17)(content, {});
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!./login-box.css", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!./login-box.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 372 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(15)();
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/***/ }),
+/* 373 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(372);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// add the styles to the DOM
+var update = __webpack_require__(17)(content, {});
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!./login-form.css", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!./login-form.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 374 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(15)();
+// imports
+
+
+// module
+exports.push([module.i, "/* not-found.css */\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 375 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(374);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// add the styles to the DOM
+var update = __webpack_require__(17)(content, {});
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!./not-found.css", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!./not-found.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 376 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(15)();
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/***/ }),
+/* 377 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(376);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// add the styles to the DOM
+var update = __webpack_require__(17)(content, {});
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!./question.css", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!./question.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 378 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(15)();
+// imports
+
+
+// module
+exports.push([module.i, "/* question-modal.css */\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 379 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(378);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// add the styles to the DOM
+var update = __webpack_require__(17)(content, {});
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!./question-modal.css", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!./question-modal.css");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});

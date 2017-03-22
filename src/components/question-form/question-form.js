@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+
 import { addQuestion } from '../../actions/questions';
 
 if (process.env.BROWSER) {
@@ -71,6 +72,11 @@ class QuestionForm extends Component {
     );
   }
 }
+
+QuestionForm.propTypes = {
+  user: PropTypes.object,
+  addQuestion: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = state => ({ user: state.user });
 

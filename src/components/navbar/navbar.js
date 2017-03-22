@@ -1,43 +1,35 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import SearchBox from '../search-box/search-box';
+
 import { logOut } from '../../actions/user';
+
+import SearchBox from '../search-box/search-box';
 
 if (process.env.BROWSER) {
   require('./navbar.css');
 }
 
 const navbar = props => (
-  <nav className="Navbar navbar fixed-top navbar-toggleable-md navbar-light bg-faded">
-    <button
-      className="navbar-toggler navbar-toggler-right"
-      type="button"
-      data-toggle="collapse"
-      data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span
-        className="navbar-toggler-icon"
-      />
-    </button>
-    <Link
-      className="Navbar-title navbar-brand"
-      to="/"
-    >
-      Quoro
-    </Link>
+  <nav className="Navbar navbar fixed-top navbar-light bg-faded">
+    <div className="d-flex justify-content-between">
+      <div>
+        <Link
+          className="Navbar-title navbar-brand"
+          to="/"
+        >
+          Quoro
+        </Link>
+      </div>
 
-    <SearchBox />
+      <div className="Navbar-search">
+        <SearchBox />
+      </div>
 
-    <div className="collapse navbar-collapse" id="navbarText">
-      <ul className="navbar-nav">
-        <li className="nav-item">
-          Hello, <Link to="/user">{props.username}</Link>
-        </li>
-      </ul>
+      <div>
+        <p>Hello, <Link to="/user">{props.username}</Link>
+        </p>
+      </div>
     </div>
   </nav>
 );

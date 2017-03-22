@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+
+import { getUserQuestions } from '../../actions/questions';
+
 import QuestionPreview from '../question-preview/question-preview';
 import List from '../list/list';
-import { getUserQuestions } from '../../actions/questions';
 
 class UserPanel extends Component {
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.getUserQuestions(this.props.user.id);
   }
 
@@ -33,6 +34,12 @@ class UserPanel extends Component {
     );
   }
 }
+
+UserPanel.propTypes = {
+  questions: PropTypes.array,
+  user: PropTypes.object,
+  getUserQuestions: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = state =>
   ({ user: state.user, questions: state.questions.userQuestions });

@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+
 import { addAnswer } from '../../actions/active-question';
 
 if (process.env.BROWSER) {
@@ -48,6 +49,13 @@ class AnswerForm extends Component {
     );
   }
 }
+
+AnswerForm.propTypes = {
+  addAnswer: PropTypes.func.isRequired,
+  questionId: PropTypes.number.isRequired,
+  userId: PropTypes.number.isRequired,
+  token: PropTypes.string.isRequired,
+};
 
 const mapStateToProps = (state) => {
   const { token, id } = state.user;

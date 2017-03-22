@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import List from '../list/list';
 import QuestionPreview from '../question-preview/question-preview';
@@ -11,6 +11,10 @@ const lastViewedQuestions = (props) => {
       <List data={questions} component={QuestionPreview} />
     </div>
   );
+};
+
+lastViewedQuestions.propTypes = {
+  questions: PropTypes.array,
 };
 
 const mapStateToProps = state => ({ questions: state.questions.lastViewedQuestions });

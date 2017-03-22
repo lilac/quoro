@@ -5,7 +5,7 @@ const setState = state =>
 
 export const startLoading = () => setState(true);
 
-export const endLoading = (time = 500) => dispatch =>
+export const endLoading = (time = 450) => dispatch =>
   setTimeout(() => {
     dispatch(setState(false));
   }, time);

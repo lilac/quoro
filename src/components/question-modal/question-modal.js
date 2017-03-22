@@ -1,19 +1,24 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
+
+if (process.env.BROWSER) {
+  require('./question-modal.css');
+}
 
 const modal = (props) => {
+  const { modalId, title, children } = props;
   return (
     <div
       className="modal fade"
-      id={props.modalId}
+      id={modalId}
       tabIndex="-1"
       role="dialog"
-      aria-labelledby={props.title}
+      aria-labelledby={title}
       aria-hidden="true"
     >
       <div className="modal-dialog" role="document">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title">{props.title}</h5>
+            <h5 className="modal-title">{title}</h5>
             <button
               type="button"
               className="close"
@@ -24,12 +29,17 @@ const modal = (props) => {
             </button>
           </div>
           <div className="modal-body">
-            {props.children}
+            {children}
           </div>
         </div>
       </div>
     </div>
   );
+};
+
+modal.propTypes = {
+  title: PropTypes.string.isRequired,
+  modalId: PropTypes.number.isRequired,
 };
 
 export default modal;

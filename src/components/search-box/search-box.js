@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+
+import { searchQuestions, setSearchedQuestions } from '../../actions/questions';
+
 import List from '../list/list';
 import QuestionPreview from '../question-preview/question-preview';
-import { searchQuestions, setSearchedQuestions } from '../../actions/questions';
 
 if (process.env.BROWSER) {
   require('./search-box.css');
@@ -41,6 +43,8 @@ class SearchBox extends Component {
 
 SearchBox.propTypes = {
   setSearchedQuestions: PropTypes.func.isRequired,
+  searchQuestions: PropTypes.func.isRequired,
+  questions: PropTypes.array,
 };
 
 const mapStateToProps = state =>

@@ -1,6 +1,11 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+
 import { deleteAnswer } from '../../actions/active-question';
+
+if (process.env.BROWSER) {
+  require('./answer.css');
+}
 
 const answer = (props) => {
   const { content, answerId, userId, user, questionId } = props;

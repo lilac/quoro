@@ -32,4 +32,11 @@ const questionPreview = (props) => {
   );
 };
 
+questionPreview.propTypes = {
+  id: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
+  addedAt: PropTypes.object.isRequired,
+};
+
 export default questionPreview;

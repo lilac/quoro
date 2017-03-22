@@ -1,12 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router';
+
 import { fetchQuestions } from '../../actions/questions';
+import socket from '../../socket-client';
+
 import QuestionsList from '../questions-list/questions-list';
 import LastViewedQuestions from '../last-viewed-questions/last-viewed-questions';
 import QuestionForm from '../question-form/question-form';
 import Modal from '../question-modal/question-modal';
-import socket from '../../socket-client';
 
 if (process.env.BROWSER) {
   require('./app.css');

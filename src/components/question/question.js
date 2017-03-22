@@ -1,14 +1,28 @@
 import React, { Component, PropTypes } from 'react';
-import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
-import Spinner from '../spinner/spinner';
-import Answer from '../answer/answer';
-import List from '../list/list';
-import AnswerForm from '../answer-form/answer-form';
+import { Redirect } from 'react-router-dom';
+
 import { fetchQuestion, clearQuestion } from '../../actions/active-question';
 import { deleteQuestion } from '../../actions/questions';
 
+import Answer from '../answer/answer';
+import List from '../list/list';
+import AnswerForm from '../answer-form/answer-form';
+
+if (process.env.BROWSER) {
+  require('./question.css');
+}
+
 class Question extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isDeleted: false,
+    };
+  }
+
   componentWillMount() {
     const id = this.props.match.params.id;
     this.props.fetchQuestion(id, this.props.user.token);
@@ -19,7 +33,11 @@ class Question extends Component {
   }
 
   render() {
-    const { question, author, answers, isLoading } = this.props;
+    const { question, author, answers, user: { token } } = this.props;
+
+    if (this.state.isDeleted) {
+      return (<Redirect to="/" />);
+    }
 
     if (!question) {
       return null;
@@ -30,15 +48,16 @@ class Question extends Component {
     const xSign = id === userId ? (
       <button
         className="btn btn-md btn-warning"
-        onClick={() => this.props.deleteQuestion(questionId, token)}
+        onClick={() => {
+          this.props.deleteQuestion(questionId, token);
+          this.setState({ isDeleted: true });
+        }}
       >
         Delete
       </button>
       ) : null;
-    const spinner = isLoading ? (<Spinner />) : null;
     return (
       <div className="Question container">
-        {spinner}
         <div className="Question-content jumbotron">
           {xSign}
           <h1>{title}</h1>
@@ -63,6 +82,7 @@ Question.propTypes = {
   clearQuestion: PropTypes.func.isRequired,
   user: PropTypes.object,
   deleteQuestion: PropTypes.func.isRequired,
+  match: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({

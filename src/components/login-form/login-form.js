@@ -1,6 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+
 import { logIn } from '../../actions/user';
+
+if (process.env.BROWSER) {
+  require('./login-form.css');
+}
 
 class LoginForm extends Component {
 
@@ -70,5 +75,9 @@ class LoginForm extends Component {
     );
   }
 }
+
+LoginForm.propTypes = {
+  logIn: PropTypes.func.isRequired,
+};
 
 export default connect(null, { logIn })(LoginForm);
