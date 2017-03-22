@@ -24,9 +24,11 @@ class Question extends Component {
       return (<Redirect to="/login" />);
     }
 
-    console.log(this.props);
+    const { question, author, answers, isLoading } = this.props;
 
-    const { question, author, answers } = this.props;
+    if (!question) {
+      return null;
+    }
 
     const { title, content, userId, id: questionId } = question;
     const { username, id } = author;
@@ -38,8 +40,10 @@ class Question extends Component {
         Delete
       </button>
       ) : null;
+    const spinner = isLoading ? (<Spinner />) : null;
     return (
       <div className="Question container">
+        {spinner}
         <div className="Question-content jumbotron">
           {xSign}
           <h1>{title}</h1>
@@ -47,7 +51,7 @@ class Question extends Component {
           <p>Asked by {username}</p>
         </div>
         <div className="Question-answers">
-          <AnswerForm questionId={id} />
+          <AnswerForm questionId={questionId} />
           <List data={answers} component={Answer} />
         </div>
       </div>
@@ -59,6 +63,7 @@ Question.propTypes = {
   question: PropTypes.object,
   answers: PropTypes.array,
   author: PropTypes.object,
+  isLoading: PropTypes.bool,
   fetchQuestion: PropTypes.func.isRequired,
   clearQuestion: PropTypes.func.isRequired,
   user: PropTypes.object,
@@ -70,6 +75,7 @@ const mapStateToProps = state => ({
   question: state.activeQuestion.question,
   answers: state.activeQuestion.answers,
   author: state.activeQuestion.author,
+  isLoading: state.activeQuestion.isLoading,
 });
 
 export default connect(mapStateToProps, { fetchQuestion, clearQuestion, deleteQuestion })(Question);

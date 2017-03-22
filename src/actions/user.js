@@ -1,11 +1,12 @@
 import * as types from '../reducers/user';
 import { requestWithBody } from '../helpers/fetch-helper';
 import { changeMessage } from './message';
-import socket from '../socket-client';
+import { startLoading, endLoading } from './is-loading';
 
-export const logInSuccess = user => ({ type: types.LOG_IN, payload: user });
+export const setUser = user => ({ type: types.SET_USER, payload: user });
 
-export const logIn = (login, password) => dispatch =>
+export const logIn = (login, password) => (dispatch) => {
+  dispatch(startLoading());
   requestWithBody('/api/authorize', 'POST', { login, password })
     .then((response) => {
       if (!response.ok) {
@@ -13,22 +14,19 @@ export const logIn = (login, password) => dispatch =>
       }
       return response.json();
     })
-    .then((response) => {
-      dispatch(logInSuccess(response.result));
-    })
-    .catch(() =>
-      dispatch(changeMessage('Cannot log in, please try again later.', false))
-    );
-
-const logOutSuccess = () => ({ type: types.LOG_OUT });
+    .then(({ result: user }) => dispatch(setUser(user)))
+    .catch(() => dispatch(changeMessage('Cannot log in, please try again later.', false)))
+    .then(() => dispatch(endLoading()));
+};
 
 export const logOut = username =>
   (dispatch) => {
-    dispatch(logOutSuccess());
+    dispatch(setUser());
     dispatch(changeMessage(`Bye ${username}!`, true));
   };
 
-export const register = userData => dispatch =>
+export const register = userData => (dispatch) => {
+  dispatch(startLoading());
   requestWithBody('/api/users', 'POST', userData)
   .then((response) => {
     if (!response.ok) {
@@ -38,4 +36,6 @@ export const register = userData => dispatch =>
     dispatch(changeMessage('User created.', true));
     dispatch(logIn(login, password));
   })
-  .catch(() => dispatch(changeMessage('Failed to create user.', false)));
+  .catch(() => dispatch(changeMessage('Failed to create user.', false)))
+  .then(() => dispatch(endLoading()));
+};

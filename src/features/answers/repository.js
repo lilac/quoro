@@ -35,6 +35,7 @@ export const find = (qId) => {
   if (!qId) {
     return Promise.resolve(missingParams());
   }
+
   return db.findAnswers(qId)
     .then(answers =>
       answers.map((answer) => {

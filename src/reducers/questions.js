@@ -1,6 +1,7 @@
-export const FETCH_QUESTIONS = Symbol('FETCH_QUESTIONS');
+export const SET_QUESTIONS = Symbol('SET_QUESTIONS');
 export const ADD_LAST_VIEWED_QUESTION = Symbol('ADD_LAST_VIEWED_QUESTION');
-export const SEARCH_QUESTIONS_SUCCESS = Symbol('SEARCH_QUESTIONS_SUCCESS');
+export const DELETE_LAST_VIEWED_QUESTION = Symbol('DELETE_LAST_VIEWED_QUESTION');
+export const SET_SEARCHED_QUESTIONS = Symbol('SET_SEARCHED_QUESTIONS');
 export const SET_USER_QUESTIONS = Symbol('SET_USER_QUESTIONS');
 
 const initialState = {
@@ -15,6 +16,15 @@ const checkIfInArr = (id, arr) =>
 
 export default (state = initialState, action) => {
   switch (action.type) {
+
+    case DELETE_LAST_VIEWED_QUESTION: {
+      const deletedId = action.payload;
+      const lastViewedQuestions = state.lastViewedQuestions.filter(({ id }) => id !== deletedId);
+      return Object.assign({}, state, {
+        lastViewedQuestions,
+      });
+    }
+
     case ADD_LAST_VIEWED_QUESTION: {
       const question = action.payload;
       let lastViewedQuestions = [action.payload, ...state.lastViewedQuestions];
@@ -27,13 +37,13 @@ export default (state = initialState, action) => {
       });
     }
 
-    case FETCH_QUESTIONS: {
+    case SET_QUESTIONS: {
       return Object.assign({}, state, {
         questions: action.payload,
       });
     }
 
-    case SEARCH_QUESTIONS_SUCCESS: {
+    case SET_SEARCHED_QUESTIONS: {
       return Object.assign({}, state, {
         searchByQueryQuestions: action.payload,
       });

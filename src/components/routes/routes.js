@@ -7,6 +7,7 @@ import NotFound from '../not-found/not-found';
 import RegisterForm from '../register-form/register-form';
 import Navbar from '../navbar/navbar';
 import Alert from '../alert/alert';
+import Spinner from '../spinner/spinner';
 import UserPanel from '../user-panel/user-panel';
 
 if (process.env.BROWSER) {
@@ -25,6 +26,7 @@ const routes = () => (
         <Route path="/" exact component={App} />
         <Route component={NotFound} />
       </Switch>
+      <Spinner />
       <Alert />
     </div>
   </div>

@@ -120,9 +120,9 @@ class DatabaseService {
   }
 
   deleteQuestion(id) {
-    const query = 'DELETE questions WHERE id = $1';
+    const query = 'DELETE FROM questions WHERE id = $1';
     const data = [id];
-    return this.query(data, query);
+    return this.query(query, data);
   }
 
   findLastQuestions(amount) {

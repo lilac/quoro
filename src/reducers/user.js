@@ -1,5 +1,4 @@
-export const LOG_IN = Symbol('LOG_IN');
-export const LOG_OUT = Symbol('LOG_OUT');
+export const SET_USER = Symbol('SET_USER');
 
 const initialState = {
   token: '',
@@ -11,13 +10,11 @@ const initialState = {
 export default (state = initialState, action) => {
   console.log(action.payload);
   console.log(action.type);
-  switch (action.type) {
-    case LOG_IN: {
-      return Object.assign({}, state, action.payload);
-    }
 
-    case LOG_OUT: {
-      return Object.assign({}, state, initialState);
+  switch (action.type) {
+    case SET_USER: {
+      const user = action.payload || initialState;
+      return Object.assign({}, state, user);
     }
 
     default: return state;
