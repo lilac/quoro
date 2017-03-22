@@ -16148,14 +16148,6 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouter = __webpack_require__(8);
 
-var _app = __webpack_require__(150);
-
-var _app2 = _interopRequireDefault(_app);
-
-var _question = __webpack_require__(158);
-
-var _question2 = _interopRequireDefault(_question);
-
 var _loginBox = __webpack_require__(152);
 
 var _loginBox2 = _interopRequireDefault(_loginBox);
@@ -16168,9 +16160,9 @@ var _registerForm = __webpack_require__(160);
 
 var _registerForm2 = _interopRequireDefault(_registerForm);
 
-var _navbar = __webpack_require__(154);
+var _authorized = __webpack_require__(360);
 
-var _navbar2 = _interopRequireDefault(_navbar);
+var _authorized2 = _interopRequireDefault(_authorized);
 
 var _alert = __webpack_require__(147);
 
@@ -16179,10 +16171,6 @@ var _alert2 = _interopRequireDefault(_alert);
 var _spinner = __webpack_require__(162);
 
 var _spinner2 = _interopRequireDefault(_spinner);
-
-var _userPanel = __webpack_require__(163);
-
-var _userPanel2 = _interopRequireDefault(_userPanel);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -16194,23 +16182,16 @@ var routes = function routes() {
   return _react2.default.createElement(
     'div',
     { className: 'site-wrapper' },
-    _react2.default.createElement(_reactRouter.Route, { path: '/', component: _navbar2.default }),
     _react2.default.createElement(
-      'div',
-      { className: 'content-wrapper' },
-      _react2.default.createElement(
-        _reactRouter.Switch,
-        null,
-        _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _loginBox2.default }),
-        _react2.default.createElement(_reactRouter.Route, { path: '/register', component: _registerForm2.default }),
-        _react2.default.createElement(_reactRouter.Route, { path: '/questions/:id', component: _question2.default }),
-        _react2.default.createElement(_reactRouter.Route, { path: '/user', component: _userPanel2.default }),
-        _react2.default.createElement(_reactRouter.Route, { path: '/', exact: true, component: _app2.default }),
-        _react2.default.createElement(_reactRouter.Route, { component: _notFound2.default })
-      ),
-      _react2.default.createElement(_spinner2.default, null),
-      _react2.default.createElement(_alert2.default, null)
-    )
+      _reactRouter.Switch,
+      null,
+      _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _loginBox2.default }),
+      _react2.default.createElement(_reactRouter.Route, { path: '/register', component: _registerForm2.default }),
+      _react2.default.createElement(_authorized2.default, null),
+      _react2.default.createElement(_reactRouter.Route, { component: _notFound2.default })
+    ),
+    _react2.default.createElement(_spinner2.default, null),
+    _react2.default.createElement(_alert2.default, null)
   );
 };
 
@@ -16395,10 +16376,13 @@ var alert = function alert(props) {
       isPositive = _props$message.isPositive,
       message = _props$message.message;
 
+
   if (!message) {
     return null;
   }
+
   var style = isPositive ? 'alert-success' : 'alert-danger';
+
   return _react2.default.createElement(
     'div',
     { className: 'Alert alert ' + style },
@@ -16409,11 +16393,6 @@ var alert = function alert(props) {
 alert.propTypes = {
   message: _react.PropTypes.object
 };
-
-// alert.defaultProps = {
-//   isPosivite: false,
-//   message: '',
-// };
 
 var mapStateToProps = function mapStateToProps(state) {
   return { message: state.message };
@@ -16675,12 +16654,11 @@ var App = function (_Component) {
   }
 
   _createClass(App, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
+    key: 'componentWillMount',
+    value: function componentWillMount() {
       var fetchQuestions = this.props.fetchQuestions;
       var amountOfQuestions = this.state.amountOfQuestions;
 
-      console.log(amountOfQuestions);
       fetchQuestions(amountOfQuestions);
       var counter = 0;
       _socketClient2.default.on('ADD_QUESTION', function () {
@@ -16703,13 +16681,8 @@ var App = function (_Component) {
     value: function render() {
       var _this2 = this;
 
-      var _props = this.props,
-          token = _props.user.token,
-          questions = _props.questions;
+      var questions = this.props.questions;
 
-      if (!token) {
-        return _react2.default.createElement(_reactRouter.Redirect, { to: '/login' });
-      }
 
       return _react2.default.createElement(
         'div',
@@ -17093,11 +17066,6 @@ if (true) {
 }
 
 var navbar = function navbar(props) {
-  var pathname = props.location.pathname;
-
-  if (pathname === '/login' || pathname === '/register') {
-    return null;
-  }
   return _react2.default.createElement(
     'nav',
     { className: 'Navbar navbar fixed-top navbar-toggleable-md navbar-light bg-faded' },
@@ -17179,13 +17147,24 @@ var _react = __webpack_require__(2);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouterDom = __webpack_require__(29);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var notFound = function notFound() {
   return _react2.default.createElement(
-    'h1',
-    null,
-    'Not found'
+    'div',
+    { className: 'container' },
+    _react2.default.createElement(
+      'h1',
+      null,
+      'Not found'
+    ),
+    _react2.default.createElement(
+      _reactRouterDom.Link,
+      { to: '/' },
+      'Home'
+    )
   );
 };
 
@@ -17470,8 +17449,8 @@ var Question = function (_Component) {
   }
 
   _createClass(Question, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
+    key: 'componentWillMount',
+    value: function componentWillMount() {
       var id = this.props.match.params.id;
       this.props.fetchQuestion(id, this.props.user.token);
     }
@@ -17484,12 +17463,6 @@ var Question = function (_Component) {
     key: 'render',
     value: function render() {
       var _this2 = this;
-
-      var token = this.props.user.token;
-
-      if (!token) {
-        return _react2.default.createElement(_reactRouter.Redirect, { to: '/login' });
-      }
 
       var _props = this.props,
           question = _props.question,
@@ -17919,8 +17892,7 @@ var SearchBox = function (_Component) {
     key: 'onChange',
     value: function onChange(query) {
       if (!query) {
-        this.props.setSearchedQuestions([]);
-        return null;
+        return this.props.setSearchedQuestions([]);
       }
       return this.props.searchQuestions(query);
     }
@@ -18073,15 +18045,8 @@ var UserPanel = function (_Component) {
     value: function render() {
       var _props = this.props,
           questions = _props.questions,
-          _props$user = _props.user,
-          username = _props$user.username,
-          id = _props$user.id,
-          token = _props$user.token,
-          login = _props$user.login;
+          username = _props.user.username;
 
-      if (!id) {
-        return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/login' });
-      }
 
       var howManyQuestionsAsked = questions.length;
       return _react2.default.createElement(
@@ -18685,7 +18650,7 @@ exports = module.exports = __webpack_require__(15)();
 
 
 // module
-exports.push([module.i, ".content-wrapper {\n  margin-top: 70px;\n}\n", ""]);
+exports.push([module.i, "/* routes.css */\n", ""]);
 
 // exports
 
@@ -39107,6 +39072,127 @@ var endLoading = exports.endLoading = function endLoading() {
     }, time);
   };
 };
+
+/***/ }),
+/* 360 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(2);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(9);
+
+var _reactRouter = __webpack_require__(8);
+
+var _navbar = __webpack_require__(154);
+
+var _navbar2 = _interopRequireDefault(_navbar);
+
+var _app = __webpack_require__(150);
+
+var _app2 = _interopRequireDefault(_app);
+
+var _question = __webpack_require__(158);
+
+var _question2 = _interopRequireDefault(_question);
+
+var _userPanel = __webpack_require__(163);
+
+var _userPanel2 = _interopRequireDefault(_userPanel);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+if (true) {
+  __webpack_require__(363);
+}
+
+var authorized = function authorized(props) {
+  var _props$user = props.user,
+      token = _props$user.token,
+      login = _props$user.login,
+      username = _props$user.username,
+      id = _props$user.id;
+
+  if (!token || !login || !username || !id) {
+    return _react2.default.createElement(_reactRouter.Redirect, { to: '/login' });
+  }
+
+  return _react2.default.createElement(
+    'div',
+    { className: 'Authorized' },
+    _react2.default.createElement(_reactRouter.Route, { path: '/', component: _navbar2.default }),
+    _react2.default.createElement(
+      'div',
+      { className: 'Authorized-content' },
+      _react2.default.createElement(
+        _reactRouter.Switch,
+        null,
+        _react2.default.createElement(_reactRouter.Route, { path: '/questions/:id', component: _question2.default }),
+        _react2.default.createElement(_reactRouter.Route, { path: '/user', component: _userPanel2.default }),
+        _react2.default.createElement(_reactRouter.Route, { path: '/', exact: true, component: _app2.default })
+      )
+    )
+  );
+};
+
+authorized.propTypes = {
+  user: _react.PropTypes.object
+};
+
+var mapStateToProps = function mapStateToProps(state) {
+  return { user: state.user };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(authorized);
+
+/***/ }),
+/* 361 */,
+/* 362 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(15)();
+// imports
+
+
+// module
+exports.push([module.i, ".Authorized-content {\n  margin-top: 70px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 363 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(362);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// add the styles to the DOM
+var update = __webpack_require__(17)(content, {});
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!./authorized.css", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!./authorized.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 /******/ ]);

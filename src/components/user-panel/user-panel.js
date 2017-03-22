@@ -12,10 +12,7 @@ class UserPanel extends Component {
   }
 
   render() {
-    const { questions, user: { username, id, token, login } } = this.props;
-    if (!id) {
-      return (<Redirect to="/login" />);
-    }
+    const { questions, user: { username } } = this.props;
 
     const howManyQuestionsAsked = questions.length;
     return (

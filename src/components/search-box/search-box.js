@@ -12,8 +12,7 @@ class SearchBox extends Component {
 
   onChange(query) {
     if (!query) {
-      this.props.setSearchedQuestions([]);
-      return null;
+      return this.props.setSearchedQuestions([]);
     }
     return this.props.searchQuestions(query);
   }

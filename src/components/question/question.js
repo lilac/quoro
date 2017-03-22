@@ -9,7 +9,7 @@ import { fetchQuestion, clearQuestion } from '../../actions/active-question';
 import { deleteQuestion } from '../../actions/questions';
 
 class Question extends Component {
-  componentDidMount() {
+  componentWillMount() {
     const id = this.props.match.params.id;
     this.props.fetchQuestion(id, this.props.user.token);
   }
@@ -19,11 +19,6 @@ class Question extends Component {
   }
 
   render() {
-    const { user: { token } } = this.props;
-    if (!token) {
-      return (<Redirect to="/login" />);
-    }
-
     const { question, author, answers, isLoading } = this.props;
 
     if (!question) {

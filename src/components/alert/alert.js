@@ -7,10 +7,13 @@ if (process.env.BROWSER) {
 
 const alert = (props) => {
   const { message: { isPositive, message } } = props;
+
   if (!message) {
     return null;
   }
+
   const style = isPositive ? 'alert-success' : 'alert-danger';
+
   return (
     <div className={`Alert alert ${style}`} >
       {message}
@@ -21,11 +24,6 @@ const alert = (props) => {
 alert.propTypes = {
   message: PropTypes.object,
 };
-
-// alert.defaultProps = {
-//   isPosivite: false,
-//   message: '',
-// };
 
 const mapStateToProps = state => ({ message: state.message });
 

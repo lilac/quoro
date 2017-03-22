@@ -22,10 +22,9 @@ class App extends Component {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const { fetchQuestions } = this.props;
     const { amountOfQuestions } = this.state;
-    console.log(amountOfQuestions);
     fetchQuestions(amountOfQuestions);
     let counter = 0;
     socket.on('ADD_QUESTION', () => {
@@ -44,10 +43,7 @@ class App extends Component {
   }
 
   render() {
-    const { user: { token }, questions } = this.props;
-    if (!token) {
-      return (<Redirect to="/login" />);
-    }
+    const { questions } = this.props;
 
     return (
       <div className="App container-fluid">
