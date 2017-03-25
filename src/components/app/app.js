@@ -5,9 +5,9 @@ import { fetchQuestions } from '../../actions/questions';
 import socket from '../../socket-client';
 
 import QuestionsList from '../questions-list/questions-list';
-import LastViewedQuestions from '../last-viewed-questions/last-viewed-questions';
 import QuestionForm from '../question-form/question-form';
 import Modal from '../question-modal/question-modal';
+import UserPreview from '../user-preview/user-preview';
 
 if (process.env.BROWSER) {
   require('./app.css');
@@ -50,18 +50,20 @@ class App extends Component {
       <div className="App container-fluid">
         <div className="row">
           <div className="col-3">
-            Cos tu bd
+            <UserPreview />
           </div>
           <div className="col-6">
-            <div className="App-question-form">
-              <div className="text-center">
+            <div className="card text-center">
+              <div className="card-block">
+                <h4 className="card-title">Ask Question</h4>
+                <p className="card-text">Aint it what you waiting for!?</p>
                 <button
                   type="button"
-                  className="btn btn-primary btn-block"
+                  className="btn btn-primary"
                   data-toggle="modal"
                   data-target="#questionModal"
                 >
-                  Ask Question
+                  Ask
                 </button>
               </div>
               <Modal modalId="questionModal" title="Ask Question">
@@ -79,7 +81,7 @@ class App extends Component {
             </div>
           </div>
           <div className="col-3">
-            <LastViewedQuestions />
+            Co tu dac?
           </div>
         </div>
       </div>

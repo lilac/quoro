@@ -39,7 +39,7 @@ const modal = (props) => {
 
 modal.propTypes = {
   title: PropTypes.string.isRequired,
-  modalId: PropTypes.number.isRequired,
+  modalId: PropTypes.string.isRequired,
 };
 
 export default modal;

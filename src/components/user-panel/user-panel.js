@@ -5,6 +5,7 @@ import { getUserQuestions } from '../../actions/questions';
 
 import QuestionPreview from '../question-preview/question-preview';
 import List from '../list/list';
+import Avatar from '../avatar/avatar';
 
 class UserPanel extends Component {
 
@@ -13,15 +14,15 @@ class UserPanel extends Component {
   }
 
   render() {
-    const { questions, user: { username } } = this.props;
-
+    const { questions, user: { username, avatar } } = this.props;
     const howManyQuestionsAsked = questions.length;
     return (
       <div className="UserPanel">
         <div className="container">
-          <h1 className="">Good to see you around, {username}</h1>
+          <h1 className="display-3">Good to see you, {username}</h1>
           <div className="row">
             <div className="col">
+              <Avatar src={avatar} isVisible={avatar} />
               <h3>Statistics</h3>
               <p>Questions asked: {howManyQuestionsAsked}</p>
             </div>

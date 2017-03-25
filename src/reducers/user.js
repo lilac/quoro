@@ -5,6 +5,7 @@ const initialState = {
   username: '',
   login: '',
   id: 0,
+  avatar: '',
 };
 
 export default (state = initialState, action) => {

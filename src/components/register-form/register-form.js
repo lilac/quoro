@@ -1,7 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
+
 import { register } from '../../actions/user';
+
+import Avatar from '../avatar/avatar';
+
+if (process.env.BROWSER) {
+  require('./register-form.css');
+}
 
 class RegisterForm extends Component {
 
@@ -14,6 +21,7 @@ class RegisterForm extends Component {
       repeatPassword: '',
       email: '',
       username: '',
+      avatar: '',
       error: '',
     };
   }
@@ -24,7 +32,7 @@ class RegisterForm extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    const { login, username, password, repeatPassword, email } = this.state;
+    const { login, username, password, repeatPassword, email, avatar } = this.state;
 
     if (!login || !username || !password || !repeatPassword || !email) {
       return this.setState({ error: 'You must fill all inputs before continuing.' });
@@ -34,16 +42,30 @@ class RegisterForm extends Component {
       return this.setState({ error: 'Provided passwords dont match.' });
     }
 
-    this.setState({ error: '', login: '', password: '', repeatPassword: '', email: '', username: '' });
+    this.setState({ error: '', login: '', password: '', repeatPassword: '', email: '', username: '', avatar: '' });
 
-    return this.props.register({ login, username, password, email });
+    return this.props.register({ login, username, password, email, avatar });
+  }
+
+  onFileChange(e) {
+    const reader = new FileReader();
+
+    reader.addEventListener('load', () => {
+      const avatar = reader.result;
+      this.setState({ avatar });
+    });
+
+    reader.readAsDataURL(e.target.files[0]);
   }
 
   render() {
     const { token } = this.props.user;
+    const { avatar } = this.state;
+
     if (token) {
       return (<Redirect to="/" />);
     }
+
     return (
       <div className="RegisterForm">
         <form
@@ -124,6 +146,22 @@ class RegisterForm extends Component {
               onChange={e => this.onChange('username', e.target.value)}
             />
           </div>
+          <div className="form-group">
+            <label
+              htmlFor="avatar"
+            >
+              Avatar
+            </label>
+            <input
+              type="file"
+              id="avatar"
+              className="form-control-file"
+              placeholder="Avatar"
+              accept=".png,.jpeg,.jpg"
+              onChange={e => this.onFileChange(e)}
+            />
+          </div>
+          <Avatar src={avatar} alt="Chosen avatar" />
           {this.state.error ? (<p>{this.state.error}</p>) : null}
           <button
             type="submit"

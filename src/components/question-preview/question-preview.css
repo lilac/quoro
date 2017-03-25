@@ -1,3 +1,8 @@
 .QuestionPreview {
   min-width: 150px;
 }
+
+.QuestionPreview-image {
+  width: 40%;
+  height: 200px;
+}

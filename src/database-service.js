@@ -41,9 +41,9 @@ class DatabaseService {
     });
   }
 
-  createUser(username, login, password, email) {
-    const query = 'INSERT INTO users(username, login, password, email) VALUES ($1, $2, $3, $4);';
-    const data = [username, login, password, email];
+  createUser(username, login, password, email, avatar) {
+    const query = 'INSERT INTO users(username, login, password, email, avatar) VALUES ($1, $2, $3, $4, $5);';
+    const data = [username, login, password, email, avatar];
     return this.query(query, data);
   }
 
@@ -113,9 +113,9 @@ class DatabaseService {
       .catch(() => null);
   }
 
-  createQuestion(title, content, userId) {
-    const query = 'INSERT INTO questions(title, content, user_id) VALUES ($1, $2, $3);';
-    const data = [title, content, userId];
+  createQuestion(title, content, image, userId) {
+    const query = 'INSERT INTO questions(title, content, image, user_id) VALUES ($1, $2, $3, $4);';
+    const data = [title, content, image, userId];
     return this.query(query, data);
   }
 

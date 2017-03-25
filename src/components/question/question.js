@@ -8,6 +8,8 @@ import { deleteQuestion } from '../../actions/questions';
 import Answer from '../answer/answer';
 import List from '../list/list';
 import AnswerForm from '../answer-form/answer-form';
+import CloseButton from '../close-button/close-button';
+import Avatar from '../avatar/avatar';
 
 if (process.env.BROWSER) {
   require('./question.css');
@@ -43,24 +45,20 @@ class Question extends Component {
       return null;
     }
 
-    const { title, content, userId, id: questionId } = question;
+    const { title, content, userId, id: questionId, image } = question;
     const { username, id } = author;
-    const xSign = id === userId ? (
-      <button
-        className="btn btn-md btn-warning"
-        onClick={() => {
-          this.props.deleteQuestion(questionId, token);
-          this.setState({ isDeleted: true });
-        }}
-      >
-        Delete
-      </button>
-      ) : null;
     return (
       <div className="Question container">
         <div className="Question-content jumbotron">
-          {xSign}
-          <h1>{title}</h1>
+          <Avatar src={image} alt={title} />
+          <CloseButton
+            onClick={() => {
+              this.props.deleteQuestion(questionId, token);
+              this.setState({ isDeleted: true });
+            }}
+            isVisible={(userId === id)}
+          />
+          <h1 className="display-4">{title}</h1>
           <p>{content}</p>
           <p>Asked by {username}</p>
         </div>
@@ -77,12 +75,17 @@ Question.propTypes = {
   question: PropTypes.object,
   answers: PropTypes.array,
   author: PropTypes.object,
-  isLoading: PropTypes.bool,
   fetchQuestion: PropTypes.func.isRequired,
   clearQuestion: PropTypes.func.isRequired,
   user: PropTypes.object,
   deleteQuestion: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,
+};
+
+Question.defaultProps = {
+  question: null,
+  answers: [],
+  author: {},
 };
 
 const mapStateToProps = state => ({

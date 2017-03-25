@@ -1,20 +1,28 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import List from '../list/list';
-import QuestionPreview from '../question-preview/question-preview';
+import QuestionLink from '../question-link/question-link';
 
 const lastViewedQuestions = (props) => {
   const { questions } = props;
   return (
     <div className="LastViewedQuestions">
-      <h5 className="text-center">Last viewed</h5>
-      <List data={questions} component={QuestionPreview} />
+      <p>Last viewed:</p>
+      <List
+        data={questions}
+        component={QuestionLink}
+        className="list-group"
+      />
     </div>
   );
 };
 
 lastViewedQuestions.propTypes = {
   questions: PropTypes.array,
+};
+
+lastViewedQuestions.defaultProps = {
+  questions: [],
 };
 
 const mapStateToProps = state => ({ questions: state.questions.lastViewedQuestions });

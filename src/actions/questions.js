@@ -20,9 +20,9 @@ export const fetchQuestions = amount => (dispatch) => {
     .then(() => dispatch(endLoading()));
 };
 
-export const addQuestion = (title, content, token, amount = 10) => (dispatch) => {
+export const addQuestion = (title, content, image = '', token, amount = 10) => (dispatch) => {
   dispatch(startLoading());
-  requestWithBody('/api/questions', 'POST', { title, content, token })
+  requestWithBody('/api/questions', 'POST', { title, content, image, token })
     .then((response) => {
       if (!response.ok) {
         throw new Error();

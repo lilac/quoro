@@ -27,8 +27,13 @@ const navbar = props => (
       </div>
 
       <div>
-        <p>Hello, <Link to="/user">{props.username}</Link>
-        </p>
+        <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={() => props.logOut(props.username)}
+        >
+          Logout
+        </button>
       </div>
     </div>
   </nav>

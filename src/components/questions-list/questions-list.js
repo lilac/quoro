@@ -7,7 +7,7 @@ const questionsList = props => (
     <h2>Questions for you</h2>
     <List
       component={QuestionPreview}
-      data={props.questions || []}
+      data={props.questions}
       className="list-group"
     />
   </div>
@@ -15,6 +15,10 @@ const questionsList = props => (
 
 questionsList.propTypes = {
   questions: PropTypes.array,
+};
+
+questionsList.defaultProps = {
+  questions: [],
 };
 
 export default questionsList;

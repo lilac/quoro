@@ -4,7 +4,7 @@ import db from '../../db';
 import statusCreator, { serverError, missingParams, resourceCreated, successfulAction } from '../common/responses-with-status';
 import parseQuestion from '../common/parse-question';
 
-export const create = (username, login, password, email) => {
+export const create = (username, login, password, email, avatar) => {
   if (!username || !login || !password || !email) {
     return Promise.resolve(missingParams);
   }
@@ -15,7 +15,7 @@ export const create = (username, login, password, email) => {
     if (user) {
       return statusCreator(400)({ message: 'User with provided login already exists.' });
     }
-    return db.createUser(username, login, hash, email)
+    return db.createUser(username, login, hash, email, avatar)
       .then(() => resourceCreated());
   })
   .catch(() => serverError());
@@ -26,12 +26,12 @@ export const authenticate = (reqLogin, reqPassword) => {
     return Promise.resolve(missingParams());
   }
   return db.findUser(reqLogin)
-    .then(({ login, id, password, username }) => {
+    .then(({ login, id, password, username, avatar }) => {
       if (bcrypt.compareSync(reqPassword, password)) {
         const token = jwt.sign({ id, login }, process.env.SECRET, {
           expiresIn: '2h',
         });
-        return successfulAction({ login, token, username, id });
+        return successfulAction({ login, token, username, id, avatar });
       }
       return statusCreator(400)({ message: 'Password is incorrect.' });
     })

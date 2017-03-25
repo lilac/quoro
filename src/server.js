@@ -13,7 +13,7 @@ global.socket = io(appServer);
 
 app.use('/static', Express.static(path.join(__dirname, 'static')));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false, limit: '5mb' }));
 
 app.use('/api', apiRoutes);
 app.get('*', serverRendering);

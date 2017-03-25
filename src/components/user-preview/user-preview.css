@@ -1,0 +1,9 @@
+/* user-preview.css */
+
+.UserPreview-image {
+  box-sizing: border-box;
+  width: 80%;
+  margin: auto;
+  height: 250px;
+  padding: 5px 20px;
+}

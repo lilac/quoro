@@ -3,9 +3,9 @@ import resSender from '../common/res-sender';
 
 export default (req, res) => {
   const { user, body } = req;
-  const { title, content } = body;
+  const { title, content, image } = body;
   const { id } = user;
 
-  return create(title, content, id)
+  return create(title, content, image, id)
     .then(result => resSender(res, result));
 };
