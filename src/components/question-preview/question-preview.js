@@ -9,25 +9,26 @@ if (process.env.BROWSER) {
 
 const questionPreview = (props) => {
   const { id, title, content, addedAt, image } = props;
-  if (!id) {
-    return null;
-  }
   const { day } = addedAt;
-  const addedAtDate = new Date(day);
-  const today = new Date();
-  const questionAddedDaysAgo = Math.ceil((today - addedAtDate) / 8.64e7) - 1;
-  const daysAgoText = questionAddedDaysAgo === 0 ? 'today' : `${questionAddedDaysAgo} days ago`;
 
   return (
     <Link
       to={`/questions/${id}`}
       className="QuestionPreview list-group-item list-group-item-action flex-column align-items-start"
     >
-      <div className="d-flex w-100 justify-content-between text-center">
-        <h5 className="display-5">{title}</h5>
-        <small>{daysAgoText}</small>
+      <div
+        className="d-flex w-100 justify-content-between text-center"
+      >
+        <h5
+          className="display-5"
+        >
+          {title}
+        </h5>
+        <small>Added at {day}</small>
       </div>
-      <div className="justify-content-between w-100 d-flex">
+      <div
+        className="justify-content-between w-100 d-flex"
+      >
         <p>
           {content}
         </p>
@@ -47,6 +48,10 @@ questionPreview.propTypes = {
   content: PropTypes.string.isRequired,
   addedAt: PropTypes.object.isRequired,
   image: PropTypes.string,
+};
+
+questionPreview.defaultProps = {
+  image: '',
 };
 
 export default questionPreview;

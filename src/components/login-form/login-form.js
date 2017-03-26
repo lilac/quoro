@@ -34,7 +34,9 @@ class LoginForm extends Component {
       <form
         onSubmit={e => this.onSubmit(e)}
       >
-        <div className="form-group">
+        <div
+          className="form-group"
+        >
           <label
             htmlFor="login"
           >
@@ -49,7 +51,9 @@ class LoginForm extends Component {
             onChange={e => this.setState({ login: e.target.value })}
           />
         </div>
-        <div className="form-group">
+        <div
+          className="form-group"
+        >
           <label
             htmlFor="password"
           >

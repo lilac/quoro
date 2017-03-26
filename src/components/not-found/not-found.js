@@ -6,9 +6,15 @@ if (process.env.BROWSER) {
 }
 
 const notFound = () => (
-  <div className="container">
+  <div
+    className="container"
+  >
     <h1>Not found</h1>
-    <Link to="/">Home</Link>
+    <Link
+      to="/"
+    >
+      Home
+    </Link>
   </div>
 );
 

@@ -45,12 +45,19 @@ class Question extends Component {
       return null;
     }
 
-    const { title, content, userId, id: questionId, image } = question;
+    const { title, content, userId, id: questionId, image, addedAt: { day } } = question;
     const { username, id } = author;
     return (
-      <div className="Question container">
-        <div className="Question-content jumbotron">
-          <Avatar src={image} alt={title} />
+      <div
+        className="Question container"
+      >
+        <div
+          className="Question-content jumbotron"
+        >
+          <Avatar
+            src={image}
+            alt={title}
+          />
           <CloseButton
             onClick={() => {
               this.props.deleteQuestion(questionId, token);
@@ -58,13 +65,30 @@ class Question extends Component {
             }}
             isVisible={(userId === id)}
           />
-          <h1 className="display-4">{title}</h1>
+          <h1
+            className="display-4"
+          >
+            {title}
+          </h1>
           <p>{content}</p>
-          <p>Asked by {username}</p>
+          <p>Asked by
+          <span
+            className="Question-username"
+          >
+            {username}
+          </span>
+          at {day}</p>
         </div>
-        <div className="Question-answers">
-          <AnswerForm questionId={questionId} />
-          <List data={answers} component={Answer} />
+        <div
+          className="Question-answers"
+        >
+          <AnswerForm
+            questionId={questionId}
+          />
+          <List
+            data={answers}
+            component={Answer}
+          />
         </div>
       </div>
     );

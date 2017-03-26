@@ -16,20 +16,42 @@ const loginBox = (props) => {
   }
 
   return (
-    <div className="LoginBox container">
-      <div className="welcome-text text-center">
-        <h1 className="display-1">Quoro</h1>
-        <p className="lead">Going online and asking <strong>questions</strong> is the best way to learn. - Tom Felton</p>
+    <div
+      className="LoginBox container"
+    >
+      <div
+        className="welcome-text text-center"
+      >
+        <h1
+          className="display-1"
+        >
+          Quoro
+        </h1>
+        <p
+          className="lead"
+        >
+          Going online and asking <strong>questions</strong> is the best way to learn. - Tom Felton
+        </p>
       </div>
-      <div className="LoginBox-box">
-        <div className="row align-items-center">
-          <div className="col text-center">
+      <div
+        className="LoginBox-box"
+      >
+        <div
+          className="row align-items-center"
+        >
+          <div
+            className="col text-center"
+          >
             <h2>Dont wish it were easier, wish you were better!</h2>
           </div>
-          <div className="col">
+          <div
+            className="col"
+          >
             <LoginForm />
             Dont have an account yet?&nbsp;
-            <Link to="/register">
+            <Link
+              to="/register"
+            >
               Register.
             </Link>
           </div>

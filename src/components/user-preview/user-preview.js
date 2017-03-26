@@ -14,14 +14,22 @@ if (process.env.BROWSER) {
 const userPreview = (props) => {
   const { username, avatar } = props.user;
   return (
-    <div className="UserPreview card">
+    <div
+      className="UserPreview card"
+    >
       <Avatar
         src={avatar}
         alt="User's avatar"
         className="UserPreview-image img-fluid"
       />
-      <div className="card-block">
-        <h3 className="card-title text-center">{username}</h3>
+      <div
+        className="card-block"
+      >
+        <h3
+          className="card-title text-center"
+        >
+          {username}
+        </h3>
         <LastViewedQuestions />
         <Link
           className="btn btn-primary"

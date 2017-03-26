@@ -106,16 +106,16 @@ class DatabaseService {
   }
 
   findQuestion(id) {
-    const query = 'SELECT * FROM questions WHERE id = $1;';
+    const query = 'SELECT * FROM questions, categories WHERE id = $1 AND categories.id_cat = questions.cat_id;';
     const data = [id];
     return this.query(query, data)
-      .then(result => result.rows[0])
-      .catch(() => null);
+      .then(result => result.rows[0]);
   }
 
-  createQuestion(title, content, image, userId) {
-    const query = 'INSERT INTO questions(title, content, image, user_id) VALUES ($1, $2, $3, $4);';
-    const data = [title, content, image, userId];
+  createQuestion(title, content, image, userId, categoryId) {
+    console.log(categoryId);
+    const query = 'INSERT INTO questions(title, content, image, user_id, cat_id) VALUES ($1, $2, $3, $4, $5);';
+    const data = [title, content, image, userId, categoryId];
     return this.query(query, data);
   }
 
@@ -136,6 +136,19 @@ class DatabaseService {
     const query = 'SELECT * FROM questions WHERE user_id = $1 ORDER BY added_at;';
     const data = [userId];
     return this.query(query, data)
+      .then(result => result.rows);
+  }
+
+  findQuestionsWithCategory(id) {
+    const query = 'SELECT * FROM questions WHERE cat_id = $1';
+    const data = [id];
+    return this.query(query, data)
+      .then(result => result.rows);
+  }
+
+  findAllCategories() {
+    const query = 'SELECT * FROM categories';
+    return this.query(query)
       .then(result => result.rows);
   }
 

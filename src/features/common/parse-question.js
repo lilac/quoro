@@ -4,6 +4,8 @@ export default (fetchedQuestion) => {
     id,
     title,
     image,
+    title_cat: category,
+    id_cat: categoryId,
     user_id: userId,
     added_at: addedAt,
   } = fetchedQuestion;
@@ -14,6 +16,8 @@ export default (fetchedQuestion) => {
     title,
     userId,
     image,
+    categoryId,
+    category,
     addedAt: {
       day: addedAtDate.toLocaleDateString(),
       time: addedAtDate.toLocaleTimeString(),

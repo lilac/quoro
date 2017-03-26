@@ -5,7 +5,11 @@ const questionLink = (props) => {
   const { id, title } = props;
 
   return (
-    <Link to={`/questions/${id}`}>{title}</Link>
+    <Link
+      to={`/questions/${id}`}
+    >
+      {title}
+    </Link>
   );
 };
 

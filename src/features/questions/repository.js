@@ -19,12 +19,12 @@ export const find = (id) => {
     .catch(() => serverError);
 };
 
-export const create = (title, content, image, userId) => {
-  if (!title || !content || !image || !userId) {
+export const create = (title, content, image, userId, categoryId) => {
+  if (!title || !content || !image || !userId || !categoryId) {
     return Promise.resolve(missingParams());
   }
 
-  return db.createQuestion(title, content, image, userId)
+  return db.createQuestion(title, content, image, userId, categoryId)
     .then(() => {
       global.socket.emit('ADD_QUESTION');
       return successfulAction();

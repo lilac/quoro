@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import { searchQuestions, setSearchedQuestions } from '../../actions/questions';
 
 import List from '../list/list';
-import QuestionPreview from '../question-preview/question-preview';
+// import QuestionPreview from '../question-preview/question-preview';
+import QuestionLink from '../question-link/question-link';
 
 if (process.env.BROWSER) {
   require('./search-box.css');
@@ -23,12 +24,20 @@ class SearchBox extends Component {
     const { questions } = this.props;
     const cuttedQuestions = questions.slice(0, 4);
     const dropdown = cuttedQuestions.length ? (
-      <div className="SearchBox-dropdown">
-        <List data={cuttedQuestions} component={QuestionPreview} />
+      <div
+        className="SearchBox-dropdown"
+      >
+        <List
+          className="list-group"
+          data={cuttedQuestions}
+          component={QuestionLink}
+        />
       </div>
     ) : null;
     return (
-      <div className="SearchBox">
+      <div
+        className="SearchBox"
+      >
         <input
           className="SearchBox-input form-control mr-sm-2"
           type="text"

@@ -67,11 +67,15 @@ class RegisterForm extends Component {
     }
 
     return (
-      <div className="RegisterForm">
+      <div
+        className="RegisterForm"
+      >
         <form
           onSubmit={e => this.onSubmit(e)}
         >
-          <div className="form-group">
+          <div
+            className="form-group"
+          >
             <label
               htmlFor="email"
             >
@@ -86,7 +90,9 @@ class RegisterForm extends Component {
               onChange={e => this.onChange('email', e.target.value)}
             />
           </div>
-          <div className="form-group">
+          <div
+            className="form-group"
+          >
             <label
               htmlFor="login"
             >
@@ -101,7 +107,9 @@ class RegisterForm extends Component {
               placeholder="Password"
             />
           </div>
-          <div className="form-group">
+          <div
+            className="form-group"
+          >
             <label
               htmlFor="password"
             >
@@ -116,7 +124,9 @@ class RegisterForm extends Component {
               onChange={e => this.onChange('password', e.target.value)}
             />
           </div>
-          <div className="form-group">
+          <div
+            className="form-group"
+          >
             <label
               htmlFor="password-repeat"
             >
@@ -131,7 +141,9 @@ class RegisterForm extends Component {
               onChange={e => this.onChange('repeatPassword', e.target.value)}
             />
           </div>
-          <div className="form-group">
+          <div
+            className="form-group"
+          >
             <label
               htmlFor="username"
             >
@@ -146,7 +158,9 @@ class RegisterForm extends Component {
               onChange={e => this.onChange('username', e.target.value)}
             />
           </div>
-          <div className="form-group">
+          <div
+            className="form-group"
+          >
             <label
               htmlFor="avatar"
             >
@@ -161,7 +175,10 @@ class RegisterForm extends Component {
               onChange={e => this.onFileChange(e)}
             />
           </div>
-          <Avatar src={avatar} alt="Chosen avatar" />
+          <Avatar
+            src={avatar}
+            alt="Chosen avatar"
+          />
           {this.state.error ? (<p>{this.state.error}</p>) : null}
           <button
             type="submit"

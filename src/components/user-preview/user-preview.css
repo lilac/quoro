@@ -3,7 +3,8 @@
 .UserPreview-image {
   box-sizing: border-box;
   width: 80%;
+  max-width: 300px;
   margin: auto;
-  height: 250px;
+  height: 300px;
   padding: 5px 20px;
 }

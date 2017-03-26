@@ -10,11 +10,15 @@ const closeButton = (props) => {
   return (
     <button
       type="button"
-      className="close"
+      className="CloseButton close"
       aria-label="Close"
       onClick={() => onClick()}
     >
-      <span aria-hidden="true">&times;</span>
+      <span
+        aria-hidden="true"
+      >
+        &times;
+      </span>
     </button>
   );
 };

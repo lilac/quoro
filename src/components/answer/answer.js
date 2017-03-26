@@ -3,38 +3,36 @@ import { connect } from 'react-redux';
 
 import { deleteAnswer } from '../../actions/active-question';
 
+import CloseButton from '../close-button/close-button';
+
 if (process.env.BROWSER) {
   require('./answer.css');
 }
 
-const answer = (props) => {
+export const answer = (props) => {
   const { content, answerId, userId, user, questionId } = props;
   const { token, id: activeUserId } = user;
-  const xSign = (userId === activeUserId) ?
-    (
-      <button
-        className="btn btn-md"
-        onClick={() => props.deleteAnswer(answerId, questionId, token)}
-      >
-        DeleteX
-      </button>
-    ) : null;
 
   return (
-    <div className="Answer">
-      {xSign}
+    <div
+      className="Answer"
+    >
+      <CloseButton
+        onClick={() => props.deleteAnswer(answerId, questionId, token)}
+        isVisible={(userId === activeUserId)}
+      />
       <p>{content}</p>
     </div>
   );
 };
 
 answer.propTypes = {
-  content: PropTypes.string,
-  answerId: PropTypes.number,
-  userId: PropTypes.number,
-  user: PropTypes.object,
-  questionId: PropTypes.number,
-  deleteAnswer: PropTypes.func,
+  content: PropTypes.string.isRequired,
+  answerId: PropTypes.number.isRequired,
+  userId: PropTypes.number.isRequired,
+  user: PropTypes.object.isRequired,
+  questionId: PropTypes.number.isRequired,
+  deleteAnswer: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({ user: state.user });

@@ -13,12 +13,22 @@ if (process.env.BROWSER) {
 }
 
 const routes = () => (
-  <div className="site-wrapper">
+  <div
+    className="site-wrapper"
+  >
     <Switch>
-      <Route path="/login" component={LoginBox} />
-      <Route path="/register" component={RegisterForm} />
+      <Route
+        path="/login"
+        component={LoginBox}
+      />
+      <Route
+        path="/register"
+        component={RegisterForm}
+      />
       <Authorized />
-      <Route component={NotFound} />
+      <Route
+        component={NotFound}
+      />
     </Switch>
     <Spinner />
     <Alert />

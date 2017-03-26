@@ -15,7 +15,9 @@ const list = (props) => {
   const renderedList = renderList(props.data, props.component);
 
   return (
-    <div className={`List ${props.className}`}>
+    <div
+      className={`List ${props.className}`}
+    >
       {renderedList}
     </div>
   );

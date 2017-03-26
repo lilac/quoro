@@ -6,7 +6,9 @@ import QuestionLink from '../question-link/question-link';
 const lastViewedQuestions = (props) => {
   const { questions } = props;
   return (
-    <div className="LastViewedQuestions">
+    <div
+      className="LastViewedQuestions"
+    >
       <p>Last viewed:</p>
       <List
         data={questions}

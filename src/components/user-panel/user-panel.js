@@ -17,18 +17,34 @@ class UserPanel extends Component {
     const { questions, user: { username, avatar } } = this.props;
     const howManyQuestionsAsked = questions.length;
     return (
-      <div className="UserPanel">
-        <div className="container">
-          <h1 className="display-3">Good to see you, {username}</h1>
-          <div className="row">
-            <div className="col">
-              <Avatar src={avatar} isVisible={avatar} />
+      <div
+        className="UserPanel"
+      >
+        <div
+          className="container"
+        >
+          <div
+            className="row"
+          >
+            <article
+              className="col-4"
+            >
+              <Avatar
+                src={avatar}
+                isVisible={avatar}
+              />
               <h3>Statistics</h3>
               <p>Questions asked: {howManyQuestionsAsked}</p>
-            </div>
-            <div className="col">
-              <List data={questions} component={QuestionPreview} />
-            </div>
+            </article>
+            <section
+              className="col-8"
+            >
+              <h1>Your questions</h1>
+              <List
+                data={questions}
+                component={QuestionPreview}
+              />
+            </section>
           </div>
         </div>
       </div>

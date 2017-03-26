@@ -7,7 +7,7 @@ if (process.env.BROWSER) {
   require('./answer-form.css');
 }
 
-class AnswerForm extends Component {
+export class AnswerForm extends Component {
 
   constructor(props) {
     super(props);
@@ -23,29 +23,29 @@ class AnswerForm extends Component {
     const { addAnswer, questionId, userId, token } = this.props;
     if (content.length) {
       addAnswer(content, questionId, userId, token);
+      this.setState({ content: '' });
     }
   }
 
   render() {
     return (
-      <div className="AnswerForm">
-        <form
-          onSubmit={e => this.onSubmit(e)}
+      <form
+        onSubmit={e => this.onSubmit(e)}
+        className="AnswerForm"
+      >
+        <textarea
+          type="text"
+          value={this.state.content}
+          onChange={e => this.setState({ content: e.target.value })}
+          className="AnswerForm-content"
+        />
+        <button
+          className="btn btn-success"
+          onClick={e => this.onSubmit(e)}
         >
-          <textarea
-            type="text"
-            value={this.state.content}
-            onChange={e => this.setState({ content: e.target.value })}
-            className="AnswerForm-content"
-          />
-          <button
-            className="btn btn-success"
-            onClick={e => this.onSubmit(e)}
-          >
-            Answer
-          </button>
-        </form>
-      </div>
+          Answer
+        </button>
+      </form>
     );
   }
 }
@@ -61,7 +61,7 @@ const mapStateToProps = (state) => {
   const { token, id } = state.user;
   return {
     token,
-    userId: id
+    userId: id,
   };
 };
 

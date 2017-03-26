@@ -11,8 +11,12 @@ if (process.env.BROWSER) {
 }
 
 const navbar = props => (
-  <nav className="Navbar navbar fixed-top navbar-light bg-faded">
-    <div className="d-flex justify-content-between">
+  <nav
+    className="Navbar navbar fixed-top navbar-light bg-faded"
+  >
+    <div
+      className="d-flex justify-content-between"
+    >
       <div>
         <Link
           className="Navbar-title navbar-brand"
@@ -22,7 +26,9 @@ const navbar = props => (
         </Link>
       </div>
 
-      <div className="Navbar-search">
+      <div
+        className="Navbar-search"
+      >
         <SearchBox />
       </div>
 
