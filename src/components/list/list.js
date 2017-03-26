@@ -24,9 +24,13 @@ const list = (props) => {
 };
 
 list.propTypes = {
-  component: PropTypes.func.isRequired,
-  data: PropTypes.array.isRequired,
+  component: PropTypes.func,
+  data: PropTypes.array,
   className: PropTypes.string,
+};
+
+list.defaultProps = {
+  className: '',
 };
 
 export default list;

@@ -4,7 +4,7 @@ if (process.env.BROWSER) {
   require('./avatar.css');
 }
 
-const avatar = (props) => {
+export const avatar = (props) => {
   const { src, alt, className } = props;
 
   if (!src) {
@@ -15,7 +15,7 @@ const avatar = (props) => {
     <img
       src={src}
       alt={alt}
-      className={className}
+      className={`Avatar ${className}`}
     />
   );
 };
@@ -29,7 +29,7 @@ avatar.propTypes = {
 avatar.defaultProps = {
   alt: 'Avatar',
   src: '',
-  className: 'Avatar',
+  className: '',
 };
 
 export default avatar;

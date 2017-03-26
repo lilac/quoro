@@ -13,7 +13,7 @@ if (process.env.BROWSER) {
   require('./authorized.css');
 }
 
-const authorized = (props) => {
+export const authorized = (props) => {
   const { token, login, username, id } = props.user;
   if (!token || !login || !username || !id) {
     return (<Redirect to="/login" />);

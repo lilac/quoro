@@ -5,6 +5,7 @@ const categoryOption = (props) => {
   return (
     <option
       value={categoryId}
+      className="CategoryOption"
     >
       {title}
     </option>

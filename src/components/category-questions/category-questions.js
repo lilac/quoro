@@ -7,7 +7,7 @@ import findInArray from '../../helpers/find-in-array';
 import List from '../list/list';
 import QuestionPreview from '../question-preview/question-preview';
 
-class CategoryQuestions extends Component {
+export class CategoryQuestions extends Component {
 
   componentWillMount() {
     const { id } = this.props.match.params;

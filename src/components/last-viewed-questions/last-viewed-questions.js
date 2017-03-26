@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import List from '../list/list';
 import QuestionLink from '../question-link/question-link';
 
-const lastViewedQuestions = (props) => {
+export const lastViewedQuestions = (props) => {
   const { questions } = props;
   return (
     <div

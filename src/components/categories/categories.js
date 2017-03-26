@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import { fetchCategories } from '../../actions/categories';
@@ -6,7 +6,7 @@ import { fetchCategories } from '../../actions/categories';
 import List from '../list/list';
 import CategoryLink from '../category-link/category-link';
 
-class Categories extends Component {
+export class Categories extends Component {
 
   componentWillMount() {
     this.props.fetchCategories();
@@ -32,6 +32,11 @@ class Categories extends Component {
     );
   }
 }
+
+Categories.propTypes = {
+  fetchCategories: PropTypes.func.isRequired,
+  categories: PropTypes.array,
+};
 
 const mapStateToProps = state =>
   ({ categories: state.categories.categories });

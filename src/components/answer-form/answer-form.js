@@ -21,7 +21,7 @@ export class AnswerForm extends Component {
     e.preventDefault();
     const { content } = this.state;
     const { addAnswer, questionId, userId, token } = this.props;
-    if (content.length) {
+    if (content) {
       addAnswer(content, questionId, userId, token);
       this.setState({ content: '' });
     }

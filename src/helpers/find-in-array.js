@@ -7,7 +7,6 @@ export default (arr, val, path = []) => {
   const len = transformedArr.length;
   for (let i = 0; i < len; i += 1) {
     const actual = transformedArr[i];
-    console.log(actual, val);
     if (actual === val) {
       return arr[i];
     }

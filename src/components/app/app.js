@@ -14,7 +14,7 @@ if (process.env.BROWSER) {
   require('./app.css');
 }
 
-class App extends Component {
+export class App extends Component {
 
   constructor(props) {
     super(props);
@@ -83,7 +83,7 @@ class App extends Component {
                 </p>
                 <button
                   type="button"
-                  className="btn btn-primary"
+                  className="App-modal btn btn-primary"
                   data-toggle="modal"
                   data-target="#questionModal"
                 >
@@ -104,7 +104,7 @@ class App extends Component {
               className="text-center"
             >
               <button
-                className="btn btn-info"
+                className="App-load btn btn-info"
                 onClick={() => this.loadMore()}
               >
                 Load more..
@@ -123,16 +123,11 @@ class App extends Component {
 }
 
 App.propTypes = {
-  user: PropTypes.object,
   questions: PropTypes.array.isRequired,
   fetchQuestions: PropTypes.func.isRequired,
 };
 
-App.defaultProps = {
-  user: null,
-};
-
 const mapStateToProps = state =>
-  ({ questions: state.questions.questions, user: state.user });
+  ({ questions: state.questions.questions });
 
 export default connect(mapStateToProps, { fetchQuestions })(App);

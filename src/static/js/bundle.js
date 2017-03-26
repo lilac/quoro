@@ -2069,9 +2069,13 @@ var list = function list(props) {
 };
 
 list.propTypes = {
-  component: _react.PropTypes.func.isRequired,
-  data: _react.PropTypes.array.isRequired,
+  component: _react.PropTypes.func,
+  data: _react.PropTypes.array,
   className: _react.PropTypes.string
+};
+
+list.defaultProps = {
+  className: ''
 };
 
 exports.default = list;
@@ -3022,6 +3026,7 @@ var deleteQuestion = exports.deleteQuestion = function deleteQuestion(id, token)
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.avatar = undefined;
 
 var _react = __webpack_require__(0);
 
@@ -3033,7 +3038,7 @@ if (true) {
   __webpack_require__(371);
 }
 
-var avatar = function avatar(props) {
+var avatar = exports.avatar = function avatar(props) {
   var src = props.src,
       alt = props.alt,
       className = props.className;
@@ -3046,7 +3051,7 @@ var avatar = function avatar(props) {
   return _react2.default.createElement('img', {
     src: src,
     alt: alt,
-    className: className
+    className: 'Avatar ' + className
   });
 };
 
@@ -3059,7 +3064,7 @@ avatar.propTypes = {
 avatar.defaultProps = {
   alt: 'Avatar',
   src: '',
-  className: 'Avatar'
+  className: ''
 };
 
 exports.default = avatar;
@@ -16949,7 +16954,7 @@ var AnswerForm = exports.AnswerForm = function (_Component) {
           userId = _props.userId,
           token = _props.token;
 
-      if (content.length) {
+      if (content) {
         addAnswer(content, questionId, userId, token);
         this.setState({ content: '' });
       }
@@ -17096,6 +17101,7 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, { deleteAnswer: _act
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.App = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -17143,7 +17149,7 @@ if (true) {
   __webpack_require__(369);
 }
 
-var App = function (_Component) {
+var App = exports.App = function (_Component) {
   _inherits(App, _Component);
 
   function App(props) {
@@ -17244,7 +17250,7 @@ var App = function (_Component) {
                   'button',
                   {
                     type: 'button',
-                    className: 'btn btn-primary',
+                    className: 'App-modal btn btn-primary',
                     'data-toggle': 'modal',
                     'data-target': '#questionModal'
                   },
@@ -17271,7 +17277,7 @@ var App = function (_Component) {
               _react2.default.createElement(
                 'button',
                 {
-                  className: 'btn btn-info',
+                  className: 'App-load btn btn-info',
                   onClick: function onClick() {
                     return _this3.loadMore();
                   }
@@ -17296,17 +17302,12 @@ var App = function (_Component) {
 }(_react.Component);
 
 App.propTypes = {
-  user: _react.PropTypes.object,
   questions: _react.PropTypes.array.isRequired,
   fetchQuestions: _react.PropTypes.func.isRequired
 };
 
-App.defaultProps = {
-  user: null
-};
-
 var mapStateToProps = function mapStateToProps(state) {
-  return { questions: state.questions.questions, user: state.user };
+  return { questions: state.questions.questions };
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, { fetchQuestions: _questions.fetchQuestions })(App);
@@ -17321,6 +17322,7 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, { fetchQuestions: _q
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.authorized = undefined;
 
 var _react = __webpack_require__(0);
 
@@ -17360,7 +17362,7 @@ if (true) {
   __webpack_require__(370);
 }
 
-var authorized = function authorized(props) {
+var authorized = exports.authorized = function authorized(props) {
   var _props$user = props.user,
       token = _props$user.token,
       login = _props$user.login,
@@ -17437,6 +17439,7 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(authorized);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.Categories = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -17464,7 +17467,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Categories = function (_Component) {
+var Categories = exports.Categories = function (_Component) {
   _inherits(Categories, _Component);
 
   function Categories() {
@@ -17505,6 +17508,11 @@ var Categories = function (_Component) {
   return Categories;
 }(_react.Component);
 
+Categories.propTypes = {
+  fetchCategories: _react.PropTypes.func.isRequired,
+  categories: _react.PropTypes.array
+};
+
 var mapStateToProps = function mapStateToProps(state) {
   return { categories: state.categories.categories };
 };
@@ -17537,11 +17545,16 @@ var categoryLink = function categoryLink(props) {
   return _react2.default.createElement(
     _reactRouterDom.Link,
     {
-      className: 'list-group-item',
+      className: 'CategoryLink list-group-item',
       to: '/categories/' + categoryId
     },
     title
   );
+};
+
+categoryLink.propTypes = {
+  categoryId: _react.PropTypes.number.isRequired,
+  title: _react.PropTypes.string.isRequired
 };
 
 exports.default = categoryLink;
@@ -17568,9 +17581,10 @@ var categoryOption = function categoryOption(props) {
       title = props.title;
 
   return _react2.default.createElement(
-    'option',
+    "option",
     {
-      value: categoryId
+      value: categoryId,
+      className: "CategoryOption"
     },
     title
   );
@@ -17593,6 +17607,7 @@ exports.default = categoryOption;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.CategoryQuestions = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -17624,7 +17639,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var CategoryQuestions = function (_Component) {
+var CategoryQuestions = exports.CategoryQuestions = function (_Component) {
   _inherits(CategoryQuestions, _Component);
 
   function CategoryQuestions() {
@@ -17725,6 +17740,7 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, { fetchCategory: _ac
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.lastViewedQuestions = undefined;
 
 var _react = __webpack_require__(0);
 
@@ -17742,7 +17758,7 @@ var _questionLink2 = _interopRequireDefault(_questionLink);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var lastViewedQuestions = function lastViewedQuestions(props) {
+var lastViewedQuestions = exports.lastViewedQuestions = function lastViewedQuestions(props) {
   var questions = props.questions;
 
   return _react2.default.createElement(
@@ -19484,7 +19500,6 @@ exports.default = function (arr, val) {
   var len = transformedArr.length;
   for (var i = 0; i < len; i += 1) {
     var actual = transformedArr[i];
-    console.log(actual, val);
     if (actual === val) {
       return arr[i];
     }
