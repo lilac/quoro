@@ -4,14 +4,13 @@ import { connect } from 'react-redux';
 import { searchQuestions, setSearchedQuestions } from '../../actions/questions';
 
 import List from '../list/list';
-// import QuestionPreview from '../question-preview/question-preview';
 import QuestionLink from '../question-link/question-link';
 
 if (process.env.BROWSER) {
   require('./search-box.css');
 }
 
-class SearchBox extends Component {
+export class SearchBox extends Component {
 
   onChange(query) {
     if (!query) {

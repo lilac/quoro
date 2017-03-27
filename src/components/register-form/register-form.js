@@ -10,7 +10,7 @@ if (process.env.BROWSER) {
   require('./register-form.css');
 }
 
-class RegisterForm extends Component {
+export class RegisterForm extends Component {
 
   constructor(props) {
     super(props);
@@ -67,128 +67,125 @@ class RegisterForm extends Component {
     }
 
     return (
-      <div
+      <form
+        onSubmit={e => this.onSubmit(e)}
         className="RegisterForm"
       >
-        <form
-          onSubmit={e => this.onSubmit(e)}
+        <div
+          className="form-group"
         >
-          <div
-            className="form-group"
+          <label
+            htmlFor="email"
           >
-            <label
-              htmlFor="email"
-            >
-              E-mail
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="form-control"
-              placeholder="E-mail"
-              value={this.state.email}
-              onChange={e => this.onChange('email', e.target.value)}
-            />
-          </div>
-          <div
-            className="form-group"
-          >
-            <label
-              htmlFor="login"
-            >
-              Login
-            </label>
-            <input
-              type="text"
-              id="login"
-              className="form-control"
-              value={this.state.login}
-              onChange={e => this.onChange('login', e.target.value)}
-              placeholder="Password"
-            />
-          </div>
-          <div
-            className="form-group"
-          >
-            <label
-              htmlFor="password"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              className="form-control"
-              placeholder="Password"
-              value={this.state.password}
-              onChange={e => this.onChange('password', e.target.value)}
-            />
-          </div>
-          <div
-            className="form-group"
-          >
-            <label
-              htmlFor="password-repeat"
-            >
-              Repeat password
-            </label>
-            <input
-              type="password"
-              id="password-repeat"
-              className="form-control"
-              placeholder="Repeat password"
-              value={this.state.repeatPassword}
-              onChange={e => this.onChange('repeatPassword', e.target.value)}
-            />
-          </div>
-          <div
-            className="form-group"
-          >
-            <label
-              htmlFor="username"
-            >
-              Username
-            </label>
-            <input
-              type="text"
-              id="username"
-              className="form-control"
-              placeholder="Username"
-              value={this.state.username}
-              onChange={e => this.onChange('username', e.target.value)}
-            />
-          </div>
-          <div
-            className="form-group"
-          >
-            <label
-              htmlFor="avatar"
-            >
-              Avatar
-            </label>
-            <input
-              type="file"
-              id="avatar"
-              className="form-control-file"
-              placeholder="Avatar"
-              accept=".png,.jpeg,.jpg"
-              onChange={e => this.onFileChange(e)}
-            />
-          </div>
-          <Avatar
-            src={avatar}
-            alt="Chosen avatar"
+            E-mail
+          </label>
+          <input
+            type="email"
+            id="email"
+            className="form-control"
+            placeholder="E-mail"
+            value={this.state.email}
+            onChange={e => this.onChange('email', e.target.value)}
           />
-          {this.state.error ? (<p>{this.state.error}</p>) : null}
-          <button
-            type="submit"
-            className="btn btn-success"
-            onClick={e => this.onSubmit(e)}
+        </div>
+        <div
+          className="form-group"
+        >
+          <label
+            htmlFor="login"
           >
-            Submit
-          </button>
-        </form>
-      </div>
+            Login
+          </label>
+          <input
+            type="text"
+            id="login"
+            className="form-control"
+            value={this.state.login}
+            onChange={e => this.onChange('login', e.target.value)}
+            placeholder="Password"
+          />
+        </div>
+        <div
+          className="form-group"
+        >
+          <label
+            htmlFor="password"
+          >
+            Password
+          </label>
+          <input
+            type="password"
+            id="password"
+            className="form-control"
+            placeholder="Password"
+            value={this.state.password}
+            onChange={e => this.onChange('password', e.target.value)}
+          />
+        </div>
+        <div
+          className="form-group"
+        >
+          <label
+            htmlFor="repeatPassword"
+          >
+            Repeat password
+          </label>
+          <input
+            type="password"
+            id="repeatPassword"
+            className="form-control"
+            placeholder="Repeat password"
+            value={this.state.repeatPassword}
+            onChange={e => this.onChange('repeatPassword', e.target.value)}
+          />
+        </div>
+        <div
+          className="form-group"
+        >
+          <label
+            htmlFor="username"
+          >
+            Username
+          </label>
+          <input
+            type="text"
+            id="username"
+            className="form-control"
+            placeholder="Username"
+            value={this.state.username}
+            onChange={e => this.onChange('username', e.target.value)}
+          />
+        </div>
+        <div
+          className="form-group"
+        >
+          <label
+            htmlFor="avatar"
+          >
+            Avatar
+          </label>
+          <input
+            type="file"
+            id="avatar"
+            className="form-control-file"
+            placeholder="Avatar"
+            accept=".png,.jpeg,.jpg"
+            onChange={e => this.onFileChange(e)}
+          />
+        </div>
+        <Avatar
+          src={avatar}
+          alt="Chosen avatar"
+        />
+        {this.state.error ? (<p>{this.state.error}</p>) : null}
+        <button
+          type="submit"
+          className="btn btn-success"
+          onClick={e => this.onSubmit(e)}
+        >
+          Submit
+        </button>
+      </form>
     );
   }
 }

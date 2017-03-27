@@ -7,7 +7,7 @@ if (process.env.BROWSER) {
 
 const notFound = () => (
   <div
-    className="container"
+    className="NotFound container"
   >
     <h1>Not found</h1>
     <Link

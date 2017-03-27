@@ -11,7 +11,7 @@ if (process.env.BROWSER) {
   require('./user-preview.css');
 }
 
-const userPreview = (props) => {
+export const userPreview = (props) => {
   const { username, avatar } = props.user;
   return (
     <div
@@ -38,7 +38,7 @@ const userPreview = (props) => {
           Profile
         </Link>
         <button
-          className="btn btn-primary"
+          className="UserPreview-logout btn btn-primary"
           onClick={() => props.logOut(username)}
         >
           Logout

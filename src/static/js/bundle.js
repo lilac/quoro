@@ -10450,7 +10450,7 @@ var notFound = function notFound() {
   return _react2.default.createElement(
     'div',
     {
-      className: 'container'
+      className: 'NotFound container'
     },
     _react2.default.createElement(
       'h1',
@@ -10496,7 +10496,8 @@ var questionLink = function questionLink(props) {
   return _react2.default.createElement(
     _reactRouterDom.Link,
     {
-      to: '/questions/' + id
+      to: '/questions/' + id,
+      className: 'QuestionLink'
     },
     title
   );
@@ -16561,7 +16562,7 @@ var routes = function routes() {
   return _react2.default.createElement(
     'div',
     {
-      className: 'site-wrapper'
+      className: 'Routes'
     },
     _react2.default.createElement(
       _reactRouter.Switch,
@@ -17803,6 +17804,7 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(lastViewedQues
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.loginBox = undefined;
 
 var _react = __webpack_require__(0);
 
@@ -17822,7 +17824,7 @@ if (true) {
   __webpack_require__(373);
 }
 
-var loginBox = function loginBox(props) {
+var loginBox = exports.loginBox = function loginBox(props) {
   var token = props.user.token;
 
 
@@ -17922,6 +17924,7 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(loginBox);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.LoginForm = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -17945,7 +17948,7 @@ if (true) {
   __webpack_require__(374);
 }
 
-var LoginForm = function (_Component) {
+var LoginForm = exports.LoginForm = function (_Component) {
   _inherits(LoginForm, _Component);
 
   function LoginForm(props) {
@@ -17985,7 +17988,8 @@ var LoginForm = function (_Component) {
         {
           onSubmit: function onSubmit(e) {
             return _this2.onSubmit(e);
-          }
+          },
+          className: 'LoginForm'
         },
         _react2.default.createElement(
           'div',
@@ -18067,6 +18071,7 @@ exports.default = (0, _reactRedux.connect)(null, { logIn: _user.logIn })(LoginFo
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.navbar = undefined;
 
 var _react = __webpack_require__(0);
 
@@ -18088,7 +18093,7 @@ if (true) {
   __webpack_require__(375);
 }
 
-var navbar = function navbar(props) {
+var navbar = exports.navbar = function navbar(props) {
   return _react2.default.createElement(
     'nav',
     {
@@ -18125,7 +18130,7 @@ var navbar = function navbar(props) {
           'button',
           {
             type: 'button',
-            className: 'btn btn-secondary',
+            className: 'Navbar-logout btn btn-secondary',
             onClick: function onClick() {
               return props.logOut(props.username);
             }
@@ -18165,6 +18170,7 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, { logOut: _user.logO
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.QuestionForm = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -18204,7 +18210,7 @@ if (true) {
   __webpack_require__(377);
 }
 
-var QuestionForm = function (_Component) {
+var QuestionForm = exports.QuestionForm = function (_Component) {
   _inherits(QuestionForm, _Component);
 
   function QuestionForm(props) {
@@ -18257,12 +18263,6 @@ var QuestionForm = function (_Component) {
       reader.readAsDataURL(e.target.files[0]);
     }
   }, {
-    key: 'onCategoryChange',
-    value: function onCategoryChange(e) {
-      var id = e.target.value;
-      this.setState({ categoryId: id });
-    }
-  }, {
     key: 'renderCategories',
     value: function renderCategories(categories) {
       return categories.map(function (category) {
@@ -18280,9 +18280,7 @@ var QuestionForm = function (_Component) {
 
       return _react2.default.createElement(
         'div',
-        {
-          className: 'QuestionForm container'
-        },
+        null,
         _react2.default.createElement(
           'h2',
           null,
@@ -18291,6 +18289,7 @@ var QuestionForm = function (_Component) {
         _react2.default.createElement(
           'form',
           {
+            className: 'QuestionForm',
             onSubmit: function onSubmit(e) {
               return _this3.onSubmit(e);
             }
@@ -18344,9 +18343,9 @@ var QuestionForm = function (_Component) {
           _react2.default.createElement(
             'select',
             {
-              className: 'form-control',
+              className: 'QuestionForm-categories form-control',
               onChange: function onChange(e) {
-                return _this3.onCategoryChange(e);
+                return _this3.onChange('categoryId', e.target.value);
               },
               value: this.state.categoryId
             },
@@ -18382,7 +18381,7 @@ var QuestionForm = function (_Component) {
           _react2.default.createElement(
             'button',
             {
-              className: 'btn btn-success btn-block',
+              className: 'QuestionForm-submit btn btn-success btn-block',
               onClick: function onClick(e) {
                 return _this3.onSubmit(e);
               }
@@ -18442,7 +18441,7 @@ var modal = function modal(props) {
   return _react2.default.createElement(
     'div',
     {
-      className: 'modal fade',
+      className: 'QuestionModal modal fade',
       id: modalId,
       tabIndex: '-1',
       role: 'dialog',
@@ -18518,6 +18517,7 @@ exports.default = modal;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.Question = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -18565,7 +18565,7 @@ if (true) {
   __webpack_require__(380);
 }
 
-var Question = function (_Component) {
+var Question = exports.Question = function (_Component) {
   _inherits(Question, _Component);
 
   function Question(props) {
@@ -18775,6 +18775,7 @@ exports.default = questionsList;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.RegisterForm = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -18806,7 +18807,7 @@ if (true) {
   __webpack_require__(381);
 }
 
-var RegisterForm = function (_Component) {
+var RegisterForm = exports.RegisterForm = function (_Component) {
   _inherits(RegisterForm, _Component);
 
   function RegisterForm(props) {
@@ -18884,175 +18885,170 @@ var RegisterForm = function (_Component) {
       }
 
       return _react2.default.createElement(
-        'div',
+        'form',
         {
+          onSubmit: function onSubmit(e) {
+            return _this3.onSubmit(e);
+          },
           className: 'RegisterForm'
         },
         _react2.default.createElement(
-          'form',
+          'div',
           {
-            onSubmit: function onSubmit(e) {
+            className: 'form-group'
+          },
+          _react2.default.createElement(
+            'label',
+            {
+              htmlFor: 'email'
+            },
+            'E-mail'
+          ),
+          _react2.default.createElement('input', {
+            type: 'email',
+            id: 'email',
+            className: 'form-control',
+            placeholder: 'E-mail',
+            value: this.state.email,
+            onChange: function onChange(e) {
+              return _this3.onChange('email', e.target.value);
+            }
+          })
+        ),
+        _react2.default.createElement(
+          'div',
+          {
+            className: 'form-group'
+          },
+          _react2.default.createElement(
+            'label',
+            {
+              htmlFor: 'login'
+            },
+            'Login'
+          ),
+          _react2.default.createElement('input', {
+            type: 'text',
+            id: 'login',
+            className: 'form-control',
+            value: this.state.login,
+            onChange: function onChange(e) {
+              return _this3.onChange('login', e.target.value);
+            },
+            placeholder: 'Password'
+          })
+        ),
+        _react2.default.createElement(
+          'div',
+          {
+            className: 'form-group'
+          },
+          _react2.default.createElement(
+            'label',
+            {
+              htmlFor: 'password'
+            },
+            'Password'
+          ),
+          _react2.default.createElement('input', {
+            type: 'password',
+            id: 'password',
+            className: 'form-control',
+            placeholder: 'Password',
+            value: this.state.password,
+            onChange: function onChange(e) {
+              return _this3.onChange('password', e.target.value);
+            }
+          })
+        ),
+        _react2.default.createElement(
+          'div',
+          {
+            className: 'form-group'
+          },
+          _react2.default.createElement(
+            'label',
+            {
+              htmlFor: 'repeatPassword'
+            },
+            'Repeat password'
+          ),
+          _react2.default.createElement('input', {
+            type: 'password',
+            id: 'repeatPassword',
+            className: 'form-control',
+            placeholder: 'Repeat password',
+            value: this.state.repeatPassword,
+            onChange: function onChange(e) {
+              return _this3.onChange('repeatPassword', e.target.value);
+            }
+          })
+        ),
+        _react2.default.createElement(
+          'div',
+          {
+            className: 'form-group'
+          },
+          _react2.default.createElement(
+            'label',
+            {
+              htmlFor: 'username'
+            },
+            'Username'
+          ),
+          _react2.default.createElement('input', {
+            type: 'text',
+            id: 'username',
+            className: 'form-control',
+            placeholder: 'Username',
+            value: this.state.username,
+            onChange: function onChange(e) {
+              return _this3.onChange('username', e.target.value);
+            }
+          })
+        ),
+        _react2.default.createElement(
+          'div',
+          {
+            className: 'form-group'
+          },
+          _react2.default.createElement(
+            'label',
+            {
+              htmlFor: 'avatar'
+            },
+            'Avatar'
+          ),
+          _react2.default.createElement('input', {
+            type: 'file',
+            id: 'avatar',
+            className: 'form-control-file',
+            placeholder: 'Avatar',
+            accept: '.png,.jpeg,.jpg',
+            onChange: function onChange(e) {
+              return _this3.onFileChange(e);
+            }
+          })
+        ),
+        _react2.default.createElement(_avatar2.default, {
+          src: avatar,
+          alt: 'Chosen avatar'
+        }),
+        this.state.error ? _react2.default.createElement(
+          'p',
+          null,
+          this.state.error
+        ) : null,
+        _react2.default.createElement(
+          'button',
+          {
+            type: 'submit',
+            className: 'btn btn-success',
+            onClick: function onClick(e) {
               return _this3.onSubmit(e);
             }
           },
-          _react2.default.createElement(
-            'div',
-            {
-              className: 'form-group'
-            },
-            _react2.default.createElement(
-              'label',
-              {
-                htmlFor: 'email'
-              },
-              'E-mail'
-            ),
-            _react2.default.createElement('input', {
-              type: 'email',
-              id: 'email',
-              className: 'form-control',
-              placeholder: 'E-mail',
-              value: this.state.email,
-              onChange: function onChange(e) {
-                return _this3.onChange('email', e.target.value);
-              }
-            })
-          ),
-          _react2.default.createElement(
-            'div',
-            {
-              className: 'form-group'
-            },
-            _react2.default.createElement(
-              'label',
-              {
-                htmlFor: 'login'
-              },
-              'Login'
-            ),
-            _react2.default.createElement('input', {
-              type: 'text',
-              id: 'login',
-              className: 'form-control',
-              value: this.state.login,
-              onChange: function onChange(e) {
-                return _this3.onChange('login', e.target.value);
-              },
-              placeholder: 'Password'
-            })
-          ),
-          _react2.default.createElement(
-            'div',
-            {
-              className: 'form-group'
-            },
-            _react2.default.createElement(
-              'label',
-              {
-                htmlFor: 'password'
-              },
-              'Password'
-            ),
-            _react2.default.createElement('input', {
-              type: 'password',
-              id: 'password',
-              className: 'form-control',
-              placeholder: 'Password',
-              value: this.state.password,
-              onChange: function onChange(e) {
-                return _this3.onChange('password', e.target.value);
-              }
-            })
-          ),
-          _react2.default.createElement(
-            'div',
-            {
-              className: 'form-group'
-            },
-            _react2.default.createElement(
-              'label',
-              {
-                htmlFor: 'password-repeat'
-              },
-              'Repeat password'
-            ),
-            _react2.default.createElement('input', {
-              type: 'password',
-              id: 'password-repeat',
-              className: 'form-control',
-              placeholder: 'Repeat password',
-              value: this.state.repeatPassword,
-              onChange: function onChange(e) {
-                return _this3.onChange('repeatPassword', e.target.value);
-              }
-            })
-          ),
-          _react2.default.createElement(
-            'div',
-            {
-              className: 'form-group'
-            },
-            _react2.default.createElement(
-              'label',
-              {
-                htmlFor: 'username'
-              },
-              'Username'
-            ),
-            _react2.default.createElement('input', {
-              type: 'text',
-              id: 'username',
-              className: 'form-control',
-              placeholder: 'Username',
-              value: this.state.username,
-              onChange: function onChange(e) {
-                return _this3.onChange('username', e.target.value);
-              }
-            })
-          ),
-          _react2.default.createElement(
-            'div',
-            {
-              className: 'form-group'
-            },
-            _react2.default.createElement(
-              'label',
-              {
-                htmlFor: 'avatar'
-              },
-              'Avatar'
-            ),
-            _react2.default.createElement('input', {
-              type: 'file',
-              id: 'avatar',
-              className: 'form-control-file',
-              placeholder: 'Avatar',
-              accept: '.png,.jpeg,.jpg',
-              onChange: function onChange(e) {
-                return _this3.onFileChange(e);
-              }
-            })
-          ),
-          _react2.default.createElement(_avatar2.default, {
-            src: avatar,
-            alt: 'Chosen avatar'
-          }),
-          this.state.error ? _react2.default.createElement(
-            'p',
-            null,
-            this.state.error
-          ) : null,
-          _react2.default.createElement(
-            'button',
-            {
-              type: 'submit',
-              className: 'btn btn-success',
-              onClick: function onClick(e) {
-                return _this3.onSubmit(e);
-              }
-            },
-            'Submit'
-          )
+          'Submit'
         )
       );
     }
@@ -19082,6 +19078,7 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, { register: _user.re
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.SearchBox = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -19108,14 +19105,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-// import QuestionPreview from '../question-preview/question-preview';
-
 
 if (true) {
   __webpack_require__(383);
 }
 
-var SearchBox = function (_Component) {
+var SearchBox = exports.SearchBox = function (_Component) {
   _inherits(SearchBox, _Component);
 
   function SearchBox() {
@@ -19194,6 +19189,7 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, { searchQuestions: _
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.spinner = undefined;
 
 var _react = __webpack_require__(0);
 
@@ -19207,7 +19203,7 @@ if (true) {
   __webpack_require__(384);
 }
 
-var spinner = function spinner(props) {
+var spinner = exports.spinner = function spinner(props) {
   if (!props.isLoading) {
     return null;
   }
@@ -19255,6 +19251,7 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(spinner);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.UserPanel = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -19286,7 +19283,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var UserPanel = function (_Component) {
+var UserPanel = exports.UserPanel = function (_Component) {
   _inherits(UserPanel, _Component);
 
   function UserPanel() {
@@ -19392,6 +19389,7 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, { getUserQuestions: 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.userPreview = undefined;
 
 var _react = __webpack_require__(0);
 
@@ -19417,7 +19415,7 @@ if (true) {
   __webpack_require__(385);
 }
 
-var userPreview = function userPreview(props) {
+var userPreview = exports.userPreview = function userPreview(props) {
   var _props$user = props.user,
       username = _props$user.username,
       avatar = _props$user.avatar;
@@ -19456,7 +19454,7 @@ var userPreview = function userPreview(props) {
       _react2.default.createElement(
         'button',
         {
-          className: 'btn btn-primary',
+          className: 'UserPreview-logout btn btn-primary',
           onClick: function onClick() {
             return props.logOut(username);
           }

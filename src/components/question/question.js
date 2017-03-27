@@ -15,7 +15,7 @@ if (process.env.BROWSER) {
   require('./question.css');
 }
 
-class Question extends Component {
+export class Question extends Component {
 
   constructor(props) {
     super(props);

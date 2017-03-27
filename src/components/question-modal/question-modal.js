@@ -8,7 +8,7 @@ const modal = (props) => {
   const { modalId, title, children } = props;
   return (
     <div
-      className="modal fade"
+      className="QuestionModal modal fade"
       id={modalId}
       tabIndex="-1"
       role="dialog"

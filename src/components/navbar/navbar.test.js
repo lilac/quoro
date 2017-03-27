@@ -1,25 +1,17 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
-import Navbar from './navbar';
+import { shallow } from 'enzyme';
+import { navbar as Navbar } from './navbar';
 
-test('Renders navbar itself', () => {
-  const wrapper = shallow(<Navbar />);
-  expect(wrapper.find('.Navbar').length).toBe(1);
+test('Renders correctly', () => {
+  const wrapper = shallow(<Navbar logOut={() => {}} username="primosdace" />);
+  expect(wrapper.find('.Navbar').exists()).toBe(true);
 });
 
-test('Renders title with provided text', () => {
-  const wrapper = shallow(<Navbar title={'title'} />);
-  expect(wrapper.find('.Navbar-title').exists()).toBe(true);
-  expect(wrapper.find('.Navbar-title').text()).toBe(wrapper.instance().props.title);
-});
-
-test('Renders username with provided username', () => {
-  const wrapper = shallow(<Navbar username={'username'} />);
-  expect(wrapper.find('.Navbar-username').exists()).toBe(true);
-  expect(wrapper.find('.Navbar-username').text()).toBe(wrapper.instance().props.username);
-});
-
-test('Renders SearchBox inside', () => {
-  const wrapper = mount(<Navbar />);
-  expect(wrapper.find('.SearchBox').exists()).toBe(true);
+test('onClick in logout button calls logOut()', () => {
+  const logOut = jest.fn();
+  const username = 'primosdace';
+  const wrapper = shallow(<Navbar logOut={logOut} username={username} />);
+  wrapper.find('.Navbar-logout').simulate('click');
+  expect(logOut).toHaveBeenCalledTimes(1);
+  expect(logOut).toHaveBeenCalledWith(username);
 });

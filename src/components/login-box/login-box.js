@@ -8,7 +8,7 @@ if (process.env.BROWSER) {
   require('./login-box.css');
 }
 
-const loginBox = (props) => {
+export const loginBox = (props) => {
   const { token } = props.user;
 
   if (token) {

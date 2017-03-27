@@ -7,7 +7,7 @@ if (process.env.BROWSER) {
   require('./login-form.css');
 }
 
-class LoginForm extends Component {
+export class LoginForm extends Component {
 
   constructor(props) {
     super(props);
@@ -33,6 +33,7 @@ class LoginForm extends Component {
     return (
       <form
         onSubmit={e => this.onSubmit(e)}
+        className="LoginForm"
       >
         <div
           className="form-group"

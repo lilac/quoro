@@ -14,7 +14,7 @@ if (process.env.BROWSER) {
 
 const routes = () => (
   <div
-    className="site-wrapper"
+    className="Routes"
   >
     <Switch>
       <Route

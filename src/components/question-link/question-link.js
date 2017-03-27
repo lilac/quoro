@@ -7,6 +7,7 @@ const questionLink = (props) => {
   return (
     <Link
       to={`/questions/${id}`}
+      className="QuestionLink"
     >
       {title}
     </Link>

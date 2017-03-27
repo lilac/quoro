@@ -10,7 +10,7 @@ if (process.env.BROWSER) {
   require('./navbar.css');
 }
 
-const navbar = props => (
+export const navbar = props => (
   <nav
     className="Navbar navbar fixed-top navbar-light bg-faded"
   >
@@ -35,7 +35,7 @@ const navbar = props => (
       <div>
         <button
           type="button"
-          className="btn btn-secondary"
+          className="Navbar-logout btn btn-secondary"
           onClick={() => props.logOut(props.username)}
         >
           Logout

@@ -5,7 +5,7 @@ if (process.env.BROWSER) {
   require('./spinner.css');
 }
 
-const spinner = (props) => {
+export const spinner = (props) => {
   if (!props.isLoading) {
     return null;
   }

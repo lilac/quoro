@@ -7,7 +7,7 @@ import QuestionPreview from '../question-preview/question-preview';
 import List from '../list/list';
 import Avatar from '../avatar/avatar';
 
-class UserPanel extends Component {
+export class UserPanel extends Component {
 
   componentWillMount() {
     this.props.getUserQuestions(this.props.user.id);

@@ -7,15 +7,17 @@ const user = {
   id: 24,
 };
 
-const mockedAnswer = {
+const answer = {
   content: 'Some answer',
   answerId: 1,
   userId: 24,
   questionId: 5,
 };
 
+const deleteAnswer = () => {};
+
 test('renders answer', () => {
-  const wrapper = shallow(<Answer user={user} {...mockedAnswer} />);
+  const wrapper = shallow(<Answer user={user} {...answer} deleteAnswer={deleteAnswer} />);
   expect(wrapper.find('.Answer').exists()).toBe(true);
 });
 
@@ -23,7 +25,8 @@ test('if id matches userId it will render close button', () => {
   const wrapper = mount(
     <Answer
       user={user}
-      {...mockedAnswer}
+      {...answer}
+      deleteAnswer={deleteAnswer}
     />
   );
   expect(wrapper.find('.CloseButton').exists()).toBe(true);
@@ -33,7 +36,7 @@ test('if id doesnt match userId it wont render close button', () => {
   const changedUser = Object.assign({}, user, {
     id: 100,
   });
-  const wrapper = mount(<Answer user={changedUser} {...mockedAnswer} />);
+  const wrapper = mount(<Answer user={changedUser} {...answer} deleteAnswer={deleteAnswer} />);
   expect(wrapper.find('.CloseButton').exists()).toBe(false);
 });
 

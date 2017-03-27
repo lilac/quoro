@@ -11,7 +11,7 @@ if (process.env.BROWSER) {
   require('./question-form.css');
 }
 
-class QuestionForm extends Component {
+export class QuestionForm extends Component {
 
   constructor(props) {
     super(props);
@@ -49,11 +49,6 @@ class QuestionForm extends Component {
     reader.readAsDataURL(e.target.files[0]);
   }
 
-  onCategoryChange(e) {
-    const id = e.target.value;
-    this.setState({ categoryId: id });
-  }
-
   renderCategories(categories) {
     return categories.map(category =>
       (<CategoryOption {...category} key={category.categoryId} />)
@@ -65,11 +60,10 @@ class QuestionForm extends Component {
     const { categories } = this.props;
 
     return (
-      <div
-        className="QuestionForm container"
-      >
+      <div>
         <h2>Ask Question</h2>
         <form
+          className="QuestionForm"
           onSubmit={e => this.onSubmit(e)}
         >
           <div
@@ -107,8 +101,8 @@ class QuestionForm extends Component {
             />
           </div>
           <select
-            className="form-control"
-            onChange={(e) => this.onCategoryChange(e)}
+            className="QuestionForm-categories form-control"
+            onChange={e => this.onChange('categoryId', e.target.value)}
             value={this.state.categoryId}
           >
             {this.renderCategories(categories)}
@@ -135,7 +129,7 @@ class QuestionForm extends Component {
             alt="Question's image"
           />
           <button
-            className="btn btn-success btn-block"
+            className="QuestionForm-submit btn btn-success btn-block"
             onClick={e => this.onSubmit(e)}
           >
             Ask
@@ -154,7 +148,7 @@ QuestionForm.propTypes = {
 
 QuestionForm.defaultProps = {
   categories: [],
-}
+};
 
 const mapStateToProps = state => ({ user: state.user, categories: state.categories.categories });
 
