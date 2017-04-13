@@ -7,7 +7,7 @@ const apiServer = Server(app);
 
 // global.socket = io(apiServer);
 
-app.use('/api', apiRoutes);
+app.use('/', apiRoutes);
 
 const port = parseInt(process.env.API_SERVER_PORT, 10) || 8000;
 

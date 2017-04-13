@@ -4,7 +4,7 @@ import resSender from './res-sender';
 import { authFailure } from './responses-with-status';
 
 export default (req, res, next) => {
-  const token = req.body.token || req.query.token;
+  const token = req.body && req.body.token || req.query.token;
 
   if (token) {
     return verify(token, process.env.SECRET)
